@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/dcc22678-7a48-4e9b-b5b6-9aed01dc4b78/resourceGroups/HRBirdsWebAPI-2-dev-rg/providers/Microsoft.Web/sites/NJBudget",
+    "appService.deploySubpath": "dist\\NJBudget"
+}
