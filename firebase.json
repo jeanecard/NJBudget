@@ -1,0 +1,17 @@
+{
+  "hosting": {
+    "site": "njbudget",
+    "public": "dist/njbudget",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

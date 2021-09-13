@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "hrbrushfire": {
+      "hosting": {
+        "NJBudget": [
+          "hrbrushfire"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "hrbrushfire"
+  }
+}

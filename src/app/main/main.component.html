@@ -1,0 +1,53 @@
+<mat-stepper [linear]="isLinear" #stepper >
+
+  <!-- Appartenance et Categorie -->
+  <mat-step [stepControl]="appartenanceEtCategorieFormGroup">
+    <form [formGroup]="appartenanceEtCategorieFormGroup">
+      <ng-template matStepLabel>Catégorie</ng-template>
+
+      
+        <mat-form-field appearance="fill" class="fullWidth">
+          <mat-label>Qui ?</mat-label>
+          <input type="text" 
+              placeholder="Sélectionnez qui a dépensé"
+                 aria-label="Qui"
+                 matInput
+                 [formControl]="appartenanceForm"
+                 [matAutocomplete]="autoQui">
+          <mat-autocomplete autoActiveFirstOption #autoQui="matAutocomplete">
+            <mat-option *ngFor="let quiIterator of appartenanceOptions" [value]="quiIterator?.caption">
+              {{quiIterator?.caption}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+
+        <mat-form-field class="fullWidth" appearance="fill">
+          <mat-label>Catégorie ?</mat-label>
+          <input type="text"
+                 placeholder="Sélectionnez une catégorie"
+                 aria-label="Catégorie"
+                 matInput
+                 [formControl]="categorieForm"
+                 [matAutocomplete]="autoCategorie">
+          <mat-autocomplete autoActiveFirstOption #autoCategorie="matAutocomplete">
+            <mat-option *ngFor="let groupIterator of groupOptions" [value]="groupIterator">
+              {{groupIterator}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      <div>
+        <button mat-button matStepperNext>Suivant</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <!-- Depense -->
+  <mat-step [stepControl]="depenseFormGroup" label="Opération">
+    <form [formGroup]="depenseFormGroup">
+      <app-depense></app-depense>
+      <div>
+        <button mat-button (click)="stepper.reset()">Retour</button>
+      </div>
+    </form>
+  </mat-step>
+</mat-stepper>

@@ -1,0 +1,55 @@
+mat-card{
+      width: 90%;
+      height:80%;
+    }
+  
+  
+    .example-section {
+      display: flex;
+      align-content: center;
+      align-items: center;
+      height: 60px;
+    }
+    
+    .example-margin {
+      margin: 0 10px;
+    }
+  
+    table {
+      width: 100%;
+    }
+    .example-container {
+      height: 250px;
+      max-width: 100%;
+      overflow: auto;
+    }
+  
+    .mat-column-action {
+      width: 32px;
+      text-align: center;
+    }
+  
+    .mat-column-value {
+      width: 60px;
+      text-align: center;
+    }
+  
+    .mat-column-dateOperation {
+      width: 60px;
+      text-align: left;
+    }
+  
+    .caption{
+      width: 95%;
+    }
+    .value{
+      width: 50%;
+    }
+    
+    .mat-stepper-horizontal {
+      margin-top: 8px;
+    }
+    
+    .mat-form-field {
+      margin-top: 16px;
+    }
