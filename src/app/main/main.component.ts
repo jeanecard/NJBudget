@@ -17,9 +17,10 @@ export class MainComponent implements OnInit {
   public appartenanceOptions : Appartenance[] = [];
   public groupOptions : Group[]= [];
 
+
   public isLinear = true;
   public appartenanceEtCategorieFormGroup: FormGroup;
-  public depenseFormGroup: FormGroup;
+  // public depenseFormGroup: FormGroup;
   public appartenanceForm: FormControl;
   public categorieForm : FormControl;
 
@@ -34,9 +35,6 @@ export class MainComponent implements OnInit {
       this.appartenanceEtCategorieFormGroup = this._formBuilder.group({
         appartenanceForm: this.appartenanceForm, 
         categorieForm: this.categorieForm
-      });
-      this.depenseFormGroup = this._formBuilder.group({
-        secondCtrl: ['']
       });
   }
 

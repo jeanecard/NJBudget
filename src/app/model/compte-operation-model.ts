@@ -1,5 +1,5 @@
 export interface CompteOperationModel {
-    id: string;
+    id: string | null;
     compteId: string;
     dateOperation: Date;
     value: number;

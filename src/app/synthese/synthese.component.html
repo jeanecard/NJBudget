@@ -1,22 +1,56 @@
 <mat-card>
     <mat-card-title>Qui ?</mat-card-title>
     <mat-card-subtitle>Répartition des dépenses en septembre</mat-card-subtitle>
-<p-chart type="radar" [data]="dataGroupByAppartenance" [options]="chartOptions" width="95vw" height="80vh"></p-chart>
+    <div id="quiChart" class="chart-container">
+        <apx-chart
+        [series]="quiChartOptions.series"
+        [chart]="quiChartOptions.chart"
+        [xaxis]="quiChartOptions.xaxis"
+        [yaxis]="quiChartOptions.yaxis"
+        [stroke]="quiChartOptions.stroke"
+        [markers]="quiChartOptions.markers"
+        [dataLabels]="quiChartOptions.dataLabels"
+        ></apx-chart>
+      </div>
 </mat-card>
 <mat-card>
     <mat-card-title>Commun</mat-card-title>
     <mat-card-subtitle>Répartition des dépenses en septembre</mat-card-subtitle>
-<p-chart type="polarArea" [data]="data" [options]="chartOptions" width="95vw" height="80vh"></p-chart>
+    <div id="communChart" class="chart-container">
+        <apx-chart
+          [series]="communChartOptions?.series"
+          [chart]="communChartOptions?.chart"
+          [xaxis]="communChartOptions?.xaxis"
+          [title]="communChartOptions?.title"
+        ></apx-chart>
+      </div>
+
 </mat-card>
 <mat-card>
     <mat-card-title>Jean</mat-card-title>
     <mat-card-subtitle>Répartition des dépenses  en septembre</mat-card-subtitle>
-<p-chart type="polarArea" [data]="data" [options]="chartOptions" width="95vw" height="80vh"></p-chart>
+    <div id="jeanChart" class="chart-container">
+        <apx-chart
+          [series]="jeanChartOptions?.series"
+          [chart]="jeanChartOptions?.chart"
+          [xaxis]="jeanChartOptions?.xaxis"
+          [title]="jeanChartOptions?.title"
+        ></apx-chart>
+      </div>
+
 </mat-card>
 <mat-card>
     <mat-card-title>Nadège</mat-card-title>
     <mat-card-subtitle>Répartition des dépenses en septembre</mat-card-subtitle>
-<p-chart type="polarArea" [data]="data" [options]="chartOptions"  width="95vw" height="80vh"></p-chart>
+    <div id="nadegeChart" class="chart-container">
+        <apx-chart
+          [series]="nadegeChartOptions?.series"
+          [chart]="nadegeChartOptions?.chart"
+          [xaxis]="nadegeChartOptions?.xaxis"
+          [title]="nadegeChartOptions?.title"
+        ></apx-chart>
+      </div>
+
 </mat-card>
  <!-- radar -->
  <!-- polarArea -->

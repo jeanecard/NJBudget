@@ -10,7 +10,7 @@ export class NotificationService {
   constructor(private toastr: ToastrService) { }
    
   showSuccess(message:any, title:any){
-      this.toastr.success(message, title, {timeOut:1000})
+      this.toastr.success(message, title)
   }
    
   showError(message :any, title : any){

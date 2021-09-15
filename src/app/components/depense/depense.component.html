@@ -10,18 +10,18 @@
           <mat-card-content>
             <mat-form-field appearance="fill">
               <mat-label>Valeur</mat-label>
-              <input matInput type="number" placeholder="dépense ou gain" value="10">
+              <input matInput type="number" placeholder="dépense ou gain" [formControl]="valeurForm" >
             </mat-form-field>
             <mat-form-field appearance="fill" class="caption">
               <mat-label>Description</mat-label>
-              <input matInput  placeholder="description" value="-">
+              <input matInput  placeholder="description" [formControl]="descriptionForm">
             </mat-form-field>
           </mat-card-content>
           <mat-card-actions align="end">
-            <button mat-raised-button aria-label="Faites rentrer de l'argent" (click)="addOperation()">
+            <button  mat-raised-button aria-label="Faites rentrer de l'argent" (click)="addOperation()">
               <mat-icon>add</mat-icon>
             </button>
-            <button mat-raised-button aria-label="Dépenser de l'argent" (click)="removeOperation()">
+            <button  mat-raised-button aria-label="Dépenser de l'argent" (click)="removeOperation()">
               <mat-icon>remove</mat-icon>
             </button>
       </mat-card-actions>            
@@ -39,13 +39,15 @@
       <mat-card-subtitle>Consommé {{compteModel?.budgetSpent}} sur {{compteModel?.budgetExpected}} euros</mat-card-subtitle>
     </mat-card-title-group>        
     <mat-card-content>
-      <p-chart type="bar" 
-      [data]="graphData" 
-      [options]="horizontalOptions" 
-      [responsive]="true" 
-      width="75vw" 
-      height="25vh" ></p-chart>
-              </mat-card-content>
+      <div id="compteChart" class="chart-container">
+        <apx-chart
+          [series]="compteChartOptions.series"
+          [chart]="compteChartOptions.chart"
+          [xaxis]="compteChartOptions.xaxis"
+          [plotOptions]="compteChartOptions.plotOptions"
+        ></apx-chart>
+      </div>      
+      </mat-card-content>
   </mat-card>
     </mat-grid-tile>  
    
@@ -81,7 +83,7 @@
         <th mat-header-cell *matHeaderCellDef> Action </th>
         <td mat-cell *matCellDef="let element" class="action-link"> 
           <button mat-button (click)="onDeleteRow(element)" ><mat-icon>delete_outline</mat-icon></button>
-          <!-- <a (click)="onDeleteRow(element)">Delete</a>   -->
+          <a (click)="onDeleteRow(element)">Delete</a>  
         </td>
       </ng-container>
         

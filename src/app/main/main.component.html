@@ -42,12 +42,12 @@
   </mat-step>
 
   <!-- Depense -->
-  <mat-step [stepControl]="depenseFormGroup" label="Opération">
-    <form [formGroup]="depenseFormGroup">
+  <!-- <mat-step [stepControl]="depenseFormGroup" label="Opération"> -->
+  <mat-step label="Opération">
+
       <app-depense></app-depense>
       <div>
         <button mat-button (click)="stepper.reset()">Retour</button>
       </div>
-    </form>
   </mat-step>
 </mat-stepper>
