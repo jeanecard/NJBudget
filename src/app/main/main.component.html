@@ -1,53 +1,74 @@
-<mat-stepper [linear]="isLinear" #stepper >
+<mat-stepper [linear]="false" #stepper>
 
-  <!-- Appartenance et Categorie -->
-  <mat-step [stepControl]="appartenanceEtCategorieFormGroup">
-    <form [formGroup]="appartenanceEtCategorieFormGroup">
-      <ng-template matStepLabel>Catégorie</ng-template>
-
-      
-        <mat-form-field appearance="fill" class="fullWidth">
-          <mat-label>Qui ?</mat-label>
-          <input type="text" 
-              placeholder="Sélectionnez qui a dépensé"
-                 aria-label="Qui"
-                 matInput
-                 [formControl]="appartenanceForm"
-                 [matAutocomplete]="autoQui">
-          <mat-autocomplete autoActiveFirstOption #autoQui="matAutocomplete">
-            <mat-option *ngFor="let quiIterator of appartenanceOptions" [value]="quiIterator?.caption">
-              {{quiIterator?.caption}}
-            </mat-option>
-          </mat-autocomplete>
-        </mat-form-field>
-
-        <mat-form-field class="fullWidth" appearance="fill">
-          <mat-label>Catégorie ?</mat-label>
-          <input type="text"
-                 placeholder="Sélectionnez une catégorie"
-                 aria-label="Catégorie"
-                 matInput
-                 [formControl]="categorieForm"
-                 [matAutocomplete]="autoCategorie">
-          <mat-autocomplete autoActiveFirstOption #autoCategorie="matAutocomplete">
-            <mat-option *ngFor="let groupIterator of groupOptions" [value]="groupIterator">
-              {{groupIterator}}
-            </mat-option>
-          </mat-autocomplete>
-        </mat-form-field>
+  <!-- Qui -->
+  <mat-step>
+    <ng-template matStepLabel>Qui</ng-template>
+    <mat-grid-list cols="1" rowHeight="150px">
+      <mat-grid-tile>
+        <button matStepperNext mat-button type="button" class="btn btn-primary-outline pull-left large"
+          (click)="onClick('1');">
+          <i class="fa fa-plus"></i>
+          <img mat-card-image [src]="commun">
+        </button>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <button matStepperNext mat-button type="button" class="btn btn-primary-outline pull-left large"
+          (click)="onClick('2');">
+          <i class="fa fa-plus"></i>
+          <img mat-card-image [src]="jean">
+        </button>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <button matStepperNext mat-button type="button" class="btn btn-primary-outline pull-left large"
+          (click)="onClick('3');">
+          <i class="fa fa-plus"></i>
+          <img mat-card-image [src]="nadege">
+        </button>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <button matStepperNext mat-button type="button" class="btn btn-primary-outline pull-left large"
+          (click)="onClick('4');">
+          <i class="fa fa-plus"></i>
+          <img mat-card-image [src]="thomas">
+        </button>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </mat-step>
+  <!-- Catégorie -->
+  <mat-step>
+    <ng-template matStepLabel>Quoi</ng-template>
+    <!-- <form [formGroup]="categorieFormGroup">
+      <ng-template matStepLabel>Quoi</ng-template>
+      <mat-form-field class="fullWidth" appearance="fill">
+        <mat-label>Catégorie ?</mat-label>
+        <input type="text" placeholder="Sélectionnez une catégorie" aria-label="Catégorie" matInput
+          [formControl]="categorieForm" [matAutocomplete]="autoCategorie">
+        <mat-autocomplete autoActiveFirstOption #autoCategorie="matAutocomplete">
+          <mat-option *ngFor="let groupIterator of groupOptions" [value]="groupIterator">
+            {{groupIterator}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
       <div>
         <button mat-button matStepperNext>Suivant</button>
       </div>
-    </form>
-  </mat-step>
-
-  <!-- Depense -->
-  <!-- <mat-step [stepControl]="depenseFormGroup" label="Opération"> -->
-  <mat-step label="Opération">
-
-      <app-depense></app-depense>
-      <div>
-        <button mat-button (click)="stepper.reset()">Retour</button>
+    </form> -->
+    <mat-grid-list cols="2" rowHeight="100px">
+      <!-- <div *ngFor="let categorie of categories | async"> -->
+      <div *ngFor="let categorie of categories">
+        <mat-grid-tile>
+          <button matStepperNext mat-button type="button" class="btn btn-primary-outline pull-left"
+            (click)="onClick(categorie);"><i class="fa fa-plus"></i><img mat-card-image
+              [src]="categorie.urlDisplay"></button>
+        </mat-grid-tile>
       </div>
+    </mat-grid-list>
+  </mat-step>
+  <!-- Depense -->
+  <mat-step label="Action">
+    <app-depense></app-depense>
+    <div>
+      <button mat-button (click)="stepper.reset()">Retour</button>
+    </div>
   </mat-step>
 </mat-stepper>
