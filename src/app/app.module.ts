@@ -22,6 +22,8 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatToolbarModule} from '@angular/material/toolbar';
 
 import { ToastrModule } from 'ngx-toastr';
 
@@ -49,6 +51,8 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     MatProgressBarModule,
     MatButtonModule,
     ReactiveFormsModule,
+    MatSlideToggleModule,
+    MatToolbarModule,
     MatStepperModule,
     MatAutocompleteModule,
     ToastrModule.forRoot({
