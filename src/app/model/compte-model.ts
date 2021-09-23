@@ -1,13 +1,13 @@
 import { CompteOperationModel } from "./compte-operation-model";
+import { Group } from "./group";
 import { OperationType } from "./operation-type";
 import { StateCompte } from "./state-compte";
 
 export interface CompteModel {
-    id:string;
-    caption: string;
-    groupId: string;
+    group: Group;
     budgetExpected: number;
-    budgetSpent: number;
+    budgetConsummed: number;
+    budgetEpargne : number;
     budgetLeft: number;
     operations: CompteOperationModel[];
     state: StateCompte;

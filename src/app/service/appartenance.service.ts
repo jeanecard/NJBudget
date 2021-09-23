@@ -1,14 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { Appartenance } from '../model/appartenance';
-
-
-const STUB_DATA: Appartenance[] = [
-  {caption: "Commun", id:"1"},
-  {caption: "Nadège", id:"2"},
-  {caption: "Jean", id:"3"},
-  {caption: "Thomas", id:"4"}
-];
+import { Appartenance, AppartenanceUI } from '../model/appartenance';
 
 
 @Injectable({
@@ -17,10 +10,13 @@ const STUB_DATA: Appartenance[] = [
 
 export class AppartenanceService {
 
+  constructor(private _http: HttpClient) {
+   }
 
-  constructor() { }
-
-  public getAppartenances() : Observable<Appartenance[]> {
-    return of(STUB_DATA);
+  public getAppartenances(): Observable<Appartenance[]> {
+    
+    //return this._http.get<Appartenance[]>("https://localhost:44385/api/Appartenance");
+     return this._http.get<Appartenance[]>("https://njbudgetwbackend.azurewebsites.net/api/Appartenance");
+    
   }
 }

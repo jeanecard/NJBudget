@@ -7,9 +7,9 @@ import { AppComponent } from './app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MainComponent } from './main/main.component';
-import { HomeComponent } from './home/home.component';
-import { SyntheseComponent } from './synthese/synthese.component';
+import { MainComponent } from './components/main/main.component';
+import { HomeComponent } from './components/home/home.component';
+import { SyntheseComponent } from './components/synthese/synthese.component';
 import { DepenseComponent } from './components/depense/depense.component';
 
 import {MatInputModule} from '@angular/material/input';
@@ -24,6 +24,7 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import { HttpClientModule } from '@angular/common/http';
 
 import { ToastrModule } from 'ngx-toastr';
 
@@ -55,6 +56,7 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     MatToolbarModule,
     MatStepperModule,
     MatAutocompleteModule,
+    HttpClientModule,
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right',
       preventDuplicates: true,

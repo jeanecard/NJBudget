@@ -1,54 +1,90 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { Component, forwardRef, Input, OnInit } from '@angular/core';
+import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import { CompteModel } from 'src/app/model/compte-model';
 import { CompteOperationModel } from 'src/app/model/compte-operation-model';
+import { OperationType } from 'src/app/model/operation-type';
 import { CompteService } from 'src/app/service/compte.service';
 import { DisplayConfigurationService } from 'src/app/service/display-configuration.service';
+import { GroupService } from 'src/app/service/group.service';
 import { NotificationService } from 'src/app/service/notification.service';
 
 @Component({
   selector: 'app-depense',
   templateUrl: './depense.component.html',
-  styleUrls: ['./depense.component.scss']
+  styleUrls: ['./depense.component.scss'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => DepenseComponent),
+      multi: true
+    }
+  ]  
 })
-export class DepenseComponent implements OnInit {
+export class DepenseComponent implements OnInit, ControlValueAccessor  {
 
+  
   public displayedColumns: string[] = ['dateOperation', 'caption', 'value', 'action'];
   public dataSource: CompteOperationModel[] = [];
-  public compteModel: CompteModel | null = null;
+  public compte: CompteModel | null = null;
   public compteChartOptions: any = null;
   public valeurForm: FormControl;
   public descriptionForm: FormControl;
+  public isAddOperationAllowed = true;
+  public isRemoveOperationAllowed = true;
+  public dateDuJour : String = new Date().toLocaleString();
 
+
+
+  propagateChange = (_: any) => { };
+  propagateTouch = (_: any) => { };
 
   constructor(
-    private compteService: CompteService,
+    private _groupService: GroupService,
+    private _compteService: CompteService,
     private notifyService: NotificationService,
     private _displayConfService: DisplayConfigurationService) {
     this.valeurForm = new FormControl(null, Validators.required);
     this.descriptionForm = new FormControl();
+
+  }
+  writeValue(obj: any): void {
+    if(obj){
+      this._groupService.getGroup(obj).subscribe(
+        (data: CompteModel) => {
+          this.setModelToView(data);
+        });
+    }
+
+  }
+  registerOnChange(fn: any): void {
+    this.propagateChange = fn;
+
+  }
+  registerOnTouched(fn: any): void {
+    this.propagateTouch = fn;
   }
 
   ngOnInit(): void {
-    this.compteService.getCompte("1").subscribe(
-      (data: CompteModel) => {
-        this.setModelToView(data);
-      });
   }
 
   onDeleteRow(input: any): void {
-    console.log(input);
-  }
+    this._compteService.deleteOperation(input).subscribe(
+      (data: CompteModel |null) => {
+        if(data){
+          this.setModelToView(data);
+        }
+      });
+    }
 
   public addOperation(): void {
-    if (!this.compteModel || !this.valeurForm.value) {
+    if (!this.compte || !this.valeurForm.value) {
       this.notifyService.showWarning("Veuillez sélectionner un montant", "NJ app");
       this.valeurForm.markAsTouched();
       return;
     }
     let operation = this.getOperation();
     if (operation) {
-      this.compteService.addOperation(operation, this.compteModel).subscribe(
+      this._compteService.addOperation(operation, this.compte).subscribe(
         (data: CompteModel) => {
           this.notifyService.showSuccess("Opération gain de " + this.valeurForm.value + " euros prise en compte", "NJ app");
           this.setModelToView(data);
@@ -60,14 +96,14 @@ export class DepenseComponent implements OnInit {
 
   public removeOperation(): void {
     console.log(this.valeurForm.value);
-    if (!this.compteModel  || !this.valeurForm.value) {
+    if (!this.compte  || !this.valeurForm.value) {
       this.notifyService.showWarning("Veuillez sélectionner un montant", "NJ app");      
       this.valeurForm.markAsTouched();      
       return;
     }
     let operation = this.getOperation();
     if (operation) {
-      this.compteService.removeOperation(operation, this.compteModel).subscribe(
+      this._compteService.removeOperation(operation, this.compte).subscribe(
         (data: CompteModel) => {
           this.notifyService.showSuccess("Opération retrait de " + this.valeurForm.value + " euros prise en compte", "NJ app");
           this.setModelToView(data);
@@ -78,7 +114,16 @@ export class DepenseComponent implements OnInit {
   }
 
   private setModelToView(data: CompteModel) {
-    this.compteModel = data;
+    this.dateDuJour = new Date().toLocaleString();
+    this.compte = data;
+    let opType = this.compte.operationAllowed;
+    if(!this.compte){
+      this.isAddOperationAllowed = false;
+      this.isRemoveOperationAllowed = false;
+    } else{
+      this.isAddOperationAllowed =  opType === OperationType.AddAndDelete || opType === OperationType.AddOnly;
+      this.isRemoveOperationAllowed =  opType === OperationType.AddAndDelete || opType === OperationType.DeleteOnly;
+    }
     this.dataSource = [];
 
     data?.operations?.forEach(e => {
@@ -89,10 +134,10 @@ export class DepenseComponent implements OnInit {
 
   private getOperation(): CompteOperationModel | null {
     let operation: CompteOperationModel | null = null;
-    if (this.compteModel) {
+    if (this.compte) {
       operation = {
         caption: this.descriptionForm?.value,
-        compteId: this.compteModel.id,
+        compteId: this.compte.group.id,
         dateOperation: new Date(),
         id: null,
         value: this.valeurForm?.value
@@ -102,22 +147,22 @@ export class DepenseComponent implements OnInit {
   }
 
   private updateGraph(): void {
-    if (!this.compteModel) {
+    if (!this.compte) {
       this.compteChartOptions = {};
     } else {
-      let compteReelColor = this._displayConfService.getBackgroundColor(this.compteModel.state);
+      let compteReelColor = this._displayConfService.getBackgroundColor(this.compte.state);
       let compteExpectedColor = this._displayConfService.getExpectedColor();
       this.compteChartOptions =
       {
         series: [
           {
             name: "Prévu ",
-            data: [this.compteModel.budgetExpected],
+            data: [this.compte.budgetExpected],
             color: compteExpectedColor,
           },
           {
             name: "Réel",
-            data: [this.compteModel.budgetSpent],
+            data: [this.compte.budgetConsummed],
             color: compteReelColor,
           }
         ],

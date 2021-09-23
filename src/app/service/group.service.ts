@@ -1,16 +1,9 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { CompteModel } from '../model/compte-model';
 import { Group } from '../model/group';
-
-
-const STUB_DATA: Group[] = [
-  {id:'1', appartenanceId:'1', caption:'Electrécité', },
-  {id:'2', appartenanceId:'1', caption:'Eau', },
-  {id:'3', appartenanceId:'1', caption:'Nourriture/Courses', },
-  {id:'4', appartenanceId:'1', caption:'Assurance', },
-  {id:'5', appartenanceId:'1', caption:'Vêtements', },
-];
-
+import { UserService } from './user.service';
 
 
 @Injectable({
@@ -18,9 +11,15 @@ const STUB_DATA: Group[] = [
 })
 export class GroupService {
 
-  constructor() { }
+  constructor(private _userService: UserService , private _http: HttpClient) { }
+// passer par interceptor pour ajouter le token dans le header de la requêtehttp;-)
+  public getGroups(idAppartenance: string): Observable<Group[]> {
+    //TODO _userService
+    return this._http.get<Group[]>("https://njbudgetwbackend.azurewebsites.net/api/Group/ByIdAppartenance/" + idAppartenance);
+    //return this._http.get<Group[]>("https://localhost:44385/api/Group/ByIdAppartenance/" + idAppartenance);
+  }
 
-  public getGroups(idAppartenance : number) : Observable<Group[]>{
-    return of(STUB_DATA);
+  public getGroup(idGroup: string) : Observable<CompteModel>{
+    return this._http.get<CompteModel>("https://njbudgetwbackend.azurewebsites.net/api/Group/ById/" + idGroup);
   }
 }

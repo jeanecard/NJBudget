@@ -8,10 +8,10 @@ export interface SyntheseDepenseModelItem {
     budgetValuePrevu: number;
     budgetValueDepense: number;
     budgetPourcentageDepense: number;
-    state: StateCompte;
+    status: StateCompte;
 }
 
 export interface SyntheseDepenseModel {
     data: SyntheseDepenseModelItem[];
-    state: StateCompte;
+    status: StateCompte;
 }

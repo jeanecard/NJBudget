@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { SyntheseDepenseModel } from '../model/synthese-depense-model';
-import { DisplayConfigurationService } from '../service/display-configuration.service';
-import { SyntheseService } from '../service/synthese.service';
+import { SyntheseDepenseModel } from '../../model/synthese-depense-model';
+import { DisplayConfigurationService } from '../../service/display-configuration.service';
+import { SyntheseService } from '../../service/synthese.service';
 
 import {
   ApexAxisChartSeries,
@@ -60,8 +60,8 @@ export class SyntheseComponent implements OnInit {
   createDataForPolarReaGraph(input: SyntheseDepenseModel |null): any {
     let retour = null;
     if(input){
-        let backgroundColorValue = this._colorService.getBackgroundColor(input.state);
-        let borderColorValue = this._colorService.getBorderColor(input.state);
+        let backgroundColorValue = this._colorService.getBackgroundColor(input.status);
+        let borderColorValue = this._colorService.getBorderColor(input.status);
         let polarDataConsommee = [];
         let polarData100Pourcent = [];
         let borderColor = [];

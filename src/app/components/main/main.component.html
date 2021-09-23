@@ -1,0 +1,35 @@
+<mat-stepper mat-horizontal-stepper linear="false" #stepper>
+  <!-- Appartenance -->
+  <mat-step label="Qui">
+    <mat-grid-list cols="1" rowHeight="150px">
+      <div *ngFor="let appartenanceIter of appartenances">
+        <mat-grid-tile>
+          <button matStepperNext mat-button type="button" class="btn btn-primary-outline pull-left large"
+            (click)="onClickQui(appartenanceIter.appartenance.id);">
+            <i class="fa fa-plus"></i>
+            <img mat-card-image [src]="appartenanceIter.urlDisplay">
+          </button>
+        </mat-grid-tile>
+      </div>
+    </mat-grid-list>
+  </mat-step>
+  <!-- Catégorie -->
+  <mat-step label="Quoi">
+    <mat-grid-list cols="2" rowHeight="100px">
+      <div *ngFor="let groupIter of groups ">
+        <mat-grid-tile>
+          <button matStepperNext mat-button type="button" class="btn btn-primary-outline pull-left"
+            (click)="onClickQuoi(groupIter);"><i class="fa fa-plus"></i><img mat-card-image
+              [src]="groupIter.urlDisplay"></button>
+        </mat-grid-tile>
+      </div>
+    </mat-grid-list>
+  </mat-step>
+  <!-- Depense -->
+  <mat-step label="Action">
+    <app-depense [formControl]="depenseForm"></app-depense>
+    <div>
+      <button mat-button (click)="stepper.reset()">Retour</button>
+    </div>
+  </mat-step>
+</mat-stepper>
