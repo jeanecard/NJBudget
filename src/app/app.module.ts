@@ -25,6 +25,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { HttpClientModule } from '@angular/common/http';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 import { ToastrModule } from 'ngx-toastr';
 
@@ -56,6 +57,7 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     MatToolbarModule,
     MatStepperModule,
     MatAutocompleteModule,
+    MatProgressSpinnerModule,    
     HttpClientModule,
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right',

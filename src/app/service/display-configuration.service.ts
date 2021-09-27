@@ -11,14 +11,14 @@ export class DisplayConfigurationService {
 
   public getBackgroundColor(state : StateCompte) : string{
     if(state === StateCompte.Warnning){
-      return "rgba(255,103,0,0.2)";
+      return "rgba(255,103,0,0.5)";
     } else if(state === StateCompte.Danger){
-      return "rgba(255,0,0,0.2)";
+      return "rgba(255,0,0,0.5)";
     }
     else if(state === StateCompte.Shame){
       return "rgba(0,0,0,0.2)";
     } else if(state === StateCompte.Good){
-      return "rgba(0,250,0,0.2)";
+      return "rgba(0,250,0,0.5)";
     } else{
       return "";
     }
@@ -40,6 +40,6 @@ export class DisplayConfigurationService {
   }
 
   public getExpectedColor() : string{
-    return 'rgba(179,181,198,0.2)';
+    return 'rgba(176,190,197,0.8)';
   }
 }

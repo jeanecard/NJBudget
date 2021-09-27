@@ -10,5 +10,9 @@ export class InitialisationService {
     return "saucise";
   }
 
+  public getUserName() : string {
+    return "Jean";
+  }
+
   constructor() { }
 }

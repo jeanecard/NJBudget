@@ -1,7 +1,6 @@
 {
   "hosting": {
-    "site": "njbudget",
-    "public": "dist/njbudget",
+    "public": "dist",
     "ignore": [
       "firebase.json",
       "**/.*",

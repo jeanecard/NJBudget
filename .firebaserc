@@ -1,14 +1,5 @@
 {
-  "targets": {
-    "hrbrushfire": {
-      "hosting": {
-        "NJBudget": [
-          "hrbrushfire"
-        ]
-      }
-    }
-  },
   "projects": {
-    "default": "hrbrushfire"
+    "default": "njbudgetfront"
   }
 }

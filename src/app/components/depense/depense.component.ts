@@ -6,6 +6,7 @@ import { OperationType } from 'src/app/model/operation-type';
 import { CompteService } from 'src/app/service/compte.service';
 import { DisplayConfigurationService } from 'src/app/service/display-configuration.service';
 import { GroupService } from 'src/app/service/group.service';
+import { InitialisationService } from 'src/app/service/initialisation.service';
 import { NotificationService } from 'src/app/service/notification.service';
 
 @Component({
@@ -32,6 +33,7 @@ export class DepenseComponent implements OnInit, ControlValueAccessor  {
   public isAddOperationAllowed = true;
   public isRemoveOperationAllowed = true;
   public dateDuJour : String = new Date().toLocaleString();
+  public isLoading = false;
 
 
 
@@ -42,16 +44,19 @@ export class DepenseComponent implements OnInit, ControlValueAccessor  {
     private _groupService: GroupService,
     private _compteService: CompteService,
     private notifyService: NotificationService,
-    private _displayConfService: DisplayConfigurationService) {
+    private _displayConfService: DisplayConfigurationService,
+    private _initService :InitialisationService) {
     this.valeurForm = new FormControl(null, Validators.required);
     this.descriptionForm = new FormControl();
 
   }
   writeValue(obj: any): void {
     if(obj){
+      this.isLoading = true;
       this._groupService.getGroup(obj).subscribe(
         (data: CompteModel) => {
           this.setModelToView(data);
+          this.isLoading = false;          
         });
     }
 
@@ -84,8 +89,10 @@ export class DepenseComponent implements OnInit, ControlValueAccessor  {
     }
     let operation = this.getOperation();
     if (operation) {
-      this._compteService.addOperation(operation, this.compte).subscribe(
+      this.isLoading = true;
+      this._compteService.addOperation(operation).subscribe(
         (data: CompteModel) => {
+          this.isLoading = false;          
           this.notifyService.showSuccess("Opération gain de " + this.valeurForm.value + " euros prise en compte", "NJ app");
           this.setModelToView(data);
           this.descriptionForm.reset();
@@ -103,8 +110,10 @@ export class DepenseComponent implements OnInit, ControlValueAccessor  {
     }
     let operation = this.getOperation();
     if (operation) {
-      this._compteService.removeOperation(operation, this.compte).subscribe(
+      this.isLoading = true;
+      this._compteService.removeOperation(operation).subscribe(
         (data: CompteModel) => {
+          this.isLoading = false;          
           this.notifyService.showSuccess("Opération retrait de " + this.valeurForm.value + " euros prise en compte", "NJ app");
           this.setModelToView(data);
           this.descriptionForm.reset();
@@ -136,11 +145,12 @@ export class DepenseComponent implements OnInit, ControlValueAccessor  {
     let operation: CompteOperationModel | null = null;
     if (this.compte) {
       operation = {
+        id:null,
         caption: this.descriptionForm?.value,
         compteId: this.compte.group.id,
         dateOperation: new Date(),
-        id: null,
-        value: this.valeurForm?.value
+        value: this.valeurForm?.value,
+        user: this._initService.getUserName()
       };
     }
     return operation;

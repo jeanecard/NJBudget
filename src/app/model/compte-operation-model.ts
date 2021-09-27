@@ -4,4 +4,5 @@ export interface CompteOperationModel {
     dateOperation: Date;
     value: number;
     caption: string;
+    user: string;
 }

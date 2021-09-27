@@ -14,44 +14,15 @@ export class CompteService {
   constructor(private _userService : UserService, 
     private _http: HttpClient) { }
 
-  addOperation(input : CompteOperationModel, compte : CompteModel) : Observable<CompteModel>{
+  addOperation(input : CompteOperationModel) : Observable<CompteModel>{
     //TODO _userService
-    if(compte)
-    {
-      compte.operations.push(input);
-      compte.budgetLeft += input.value;
-      compte.budgetLeft -= input.value;
-
-      const stepLimit = compte.budgetExpected / 10;
-      compte.state = StateCompte.Good;
-      if(compte.budgetLeft <= stepLimit &&  compte.budgetLeft >=0 ){
-        compte.state = StateCompte.Warnning;
-      }
-      else if(compte.budgetLeft < 0){
-        compte.state = StateCompte.Danger;
-      }      
-    }
-    return of(compte);
+    return this._http.post<CompteModel>("https://njbudgetwbackend.azurewebsites.net​/api/Operation/add-operation", input);
+    // return this._http.post<CompteModel>("https://localhost:44385/api/Operation/add-operation", input);
   }
-
-  removeOperation(input : CompteOperationModel, compte : CompteModel) : Observable<CompteModel>{
-    //TODO _userService
-
-    if(compte)
-    {
-      compte.operations.push(input);
-      compte.budgetLeft -= input.value;
-      compte.budgetLeft += input.value;
-      const stepLimit = (3 * compte.budgetExpected) / 10;
-      compte.state = StateCompte.Good;
-      if(compte.budgetLeft <= stepLimit &&  compte.budgetLeft >=0 ){
-        compte.state = StateCompte.Warnning;
-      }
-      else if(compte.budgetLeft < 0){
-        compte.state = StateCompte.Danger;
-      }
-    }
-    return of(compte);
+ 
+  
+  removeOperation(input : CompteOperationModel) : Observable<CompteModel>{
+    return this._http.post<CompteModel>("https://njbudgetwbackend.azurewebsites.net/api/Operation/remove-operation", input);
   }
 
   deleteOperation(idOperation: string) : Observable<CompteModel |null>{
