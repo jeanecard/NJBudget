@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { never, Observable } from 'rxjs';
 import { CompteModel } from 'src/app/model/compte-model';
@@ -13,7 +13,7 @@ import { GroupService } from '../../service/group.service';
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
-  styleUrls: ['./main.component.scss']
+  styleUrls: ['./main.component.scss'],
 })
 
 
@@ -39,8 +39,6 @@ export class MainComponent implements OnInit {
       (
         {
           next: (data: Appartenance[]) => {
-            console.log("get Appartenance Next");
-            console.log(data);
             this.appartenances = [];
             data.forEach(element => {
               this.appartenances.push({ appartenance: element, urlDisplay: this._displayService.getURL(element.caption) });
@@ -50,12 +48,8 @@ export class MainComponent implements OnInit {
           },
           error: (data : any) => {
             this.isLoading = false;
-            console.log("Erreur dans le get Appartenance");
-            console.log('Erreur stringifiee-> ' + JSON.stringify(data));
-            console.log(data);
           },
           complete: () => {
-            console.log("get Appartenance Completed");
             //Dummy in this version.
           }
         });

@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>Mmm... Qui êtes vous ?</h1>
+<div mat-dialog-content>
+  <p>On ne se connait pas il me semble</p>
+  <mat-form-field appearance="fill">
+    <mat-label>Quel est votre nom ?</mat-label>
+    <input matInput [(ngModel)]="data">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Anonyme</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+</div>

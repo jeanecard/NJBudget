@@ -20,7 +20,7 @@ export class DisplayConfigurationService {
     } else if(state === StateCompte.Good){
       return "rgba(0,250,0,0.5)";
     } else{
-      return "";
+      return "rgb(255,255,255)";
     }
   }
 
@@ -33,7 +33,7 @@ export class DisplayConfigurationService {
     else if(state === StateCompte.Shame){
       return "rgba(255,255,255,0.4)";
     } else if(state === StateCompte.Good){
-      return "rgba(0,102,34,0.4)";
+      return "rgba(0,102,34,0.2)";
     } else{
       return "";
     }

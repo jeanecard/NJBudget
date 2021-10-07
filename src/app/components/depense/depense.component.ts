@@ -1,5 +1,6 @@
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { CompteModel } from 'src/app/model/compte-model';
 import { CompteOperationModel } from 'src/app/model/compte-operation-model';
 import { OperationType } from 'src/app/model/operation-type';
@@ -8,6 +9,7 @@ import { DisplayConfigurationService } from 'src/app/service/display-configurati
 import { GroupService } from 'src/app/service/group.service';
 import { InitialisationService } from 'src/app/service/initialisation.service';
 import { NotificationService } from 'src/app/service/notification.service';
+import { ConnectDialogComponent } from '../connect-dialog/connect-dialog.component';
 
 @Component({
   selector: 'app-depense',
@@ -34,6 +36,7 @@ export class DepenseComponent implements OnInit, ControlValueAccessor  {
   public isRemoveOperationAllowed = true;
   public dateDuJour : String = new Date().toLocaleString();
   public isLoading = false;
+  public isAuthN = false;
 
 
 
@@ -45,11 +48,62 @@ export class DepenseComponent implements OnInit, ControlValueAccessor  {
     private _compteService: CompteService,
     private notifyService: NotificationService,
     private _displayConfService: DisplayConfigurationService,
-    private _initService :InitialisationService) {
+    private _initService :InitialisationService,
+    public dialog: MatDialog) {
     this.valeurForm = new FormControl(null, Validators.required);
     this.descriptionForm = new FormControl();
 
   }
+
+  openAddDialog(): void {
+    if(!this.isAuthN){
+      const dialogRef = this.dialog.open(ConnectDialogComponent, {
+        width: '250px'
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        this._initService.setUserToken(result);        
+        let token = this._initService.getUserToken();
+        this.isAuthN = !(token === undefined || token === "" || token === "undefined");
+        console.log(token);    
+        if(result && this.isAuthN){
+
+          this.isAuthN = true;
+          this.addOperation();
+        }
+      });
+    }
+    else{
+      this.addOperation();
+    }
+  }
+
+  //TODO REFACTO
+  openRemoveDialog(): void {
+    if(!this.isAuthN){
+      const dialogRef = this.dialog.open(ConnectDialogComponent, {
+        width: '250px'
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        this._initService.setUserToken(result);        
+        let token = this._initService.getUserToken();
+        console.log(token);    
+        this.isAuthN = !(token === undefined || token === "" || token === "undefined");    
+        if(result && this.isAuthN){
+
+          this.isAuthN = true;
+          this.removeOperation();
+        }
+      });
+    }
+    else{
+      this.removeOperation();
+    }
+  }
+
+
+
   writeValue(obj: any): void {
     if(obj){
       this.isLoading = true;
@@ -70,15 +124,25 @@ export class DepenseComponent implements OnInit, ControlValueAccessor  {
   }
 
   ngOnInit(): void {
+    let token = this._initService.getUserToken();
+    this.isAuthN = !(token === undefined || token === "" || token === "undefined");    
   }
 
   onDeleteRow(input: any): void {
-    this._compteService.deleteOperation(input).subscribe(
-      (data: CompteModel |null) => {
-        if(data){
+    this._compteService.deleteOperation(input.id).subscribe(
+      {
+        next: (data: CompteModel) => {
+          this.notifyService.showSuccess("Suppression effectuée", "NJ app");
           this.setModelToView(data);
+        },
+        error: (data : any) => {
+          this.notifyService.showError("Echec de la suppression :-(", "NJ app");
+        },
+        complete: () => {
+          //Dummy in this version.
         }
       });
+    
     }
 
   public addOperation(): void {
@@ -102,7 +166,6 @@ export class DepenseComponent implements OnInit, ControlValueAccessor  {
   }
 
   public removeOperation(): void {
-    console.log(this.valeurForm.value);
     if (!this.compte  || !this.valeurForm.value) {
       this.notifyService.showWarning("Veuillez sélectionner un montant", "NJ app");      
       this.valeurForm.markAsTouched();      

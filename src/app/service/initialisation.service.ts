@@ -7,11 +7,27 @@ export class InitialisationService {
   
   
   public getUserToken() : string | null {
-    return "saucise";
+    let retour = localStorage.getItem("Background");
+    if(retour){
+      return retour;
+    }
+    return null;
+  }
+
+  public setUserToken(data : string) : void {
+    localStorage.setItem("Background", data);
   }
 
   public getUserName() : string {
-    return "Jean";
+    let retour = localStorage.getItem("Color");
+    if(retour){
+      return retour;
+    }
+    return "";
+  }
+
+  public setUserName(data : string) : void {
+    localStorage.setItem("Color", data);
   }
 
   constructor() { }

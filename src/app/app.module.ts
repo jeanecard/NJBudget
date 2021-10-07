@@ -11,6 +11,7 @@ import { MainComponent } from './components/main/main.component';
 import { HomeComponent } from './components/home/home.component';
 import { SyntheseComponent } from './components/synthese/synthese.component';
 import { DepenseComponent } from './components/depense/depense.component';
+import { FormsModule } from '@angular/forms';
 
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
@@ -26,10 +27,12 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { HttpClientModule } from '@angular/common/http';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatDialogModule} from '@angular/material/dialog';
 
 import { ToastrModule } from 'ngx-toastr';
 
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { ConnectDialogComponent } from './components/connect-dialog/connect-dialog.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +40,8 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     MainComponent,
     HomeComponent,
     SyntheseComponent,
-    DepenseComponent
+    DepenseComponent,
+    ConnectDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -53,6 +57,8 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     MatProgressBarModule,
     MatButtonModule,
     ReactiveFormsModule,
+    FormsModule,    
+    MatDialogModule,
     MatSlideToggleModule,
     MatToolbarModule,
     MatStepperModule,

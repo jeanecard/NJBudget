@@ -1,6 +1,6 @@
 <mat-stepper mat-horizontal-stepper linear="false" #stepper>
   <!-- Appartenance -->
-  <mat-step label="Qui">
+  <mat-step label="Qui" >
     <div *ngIf="isLoading">
       <mat-spinner></mat-spinner>
     </div>
@@ -21,7 +21,7 @@
     </mat-grid-list>
   </mat-step>
   <!-- Catégorie -->
-  <mat-step label="Quoi">
+  <mat-step label="Quoi" >
     <mat-grid-list cols="2" rowHeight="150px">
       <div *ngIf="isLoading">
         <mat-spinner></mat-spinner>
@@ -39,7 +39,7 @@
     </mat-grid-list>
   </mat-step>
   <!-- Depense -->
-  <mat-step label="Action">
+  <mat-step label="Action" >
     <app-depense [formControl]="depenseForm"></app-depense>
     <div>
       <button mat-button (click)="stepper.reset()">Retour</button>

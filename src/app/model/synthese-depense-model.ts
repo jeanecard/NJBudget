@@ -1,8 +1,6 @@
 import { StateCompte } from "./state-compte";
 
 export interface SyntheseDepenseModelItem {
-    groupId:string | null;
-    groupCaption : string | null;
     appartenanceId: string;
     appartenanceCaption : string | null;
     budgetValuePrevu: number;

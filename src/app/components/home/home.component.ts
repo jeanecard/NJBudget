@@ -16,10 +16,8 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.toggleControl.valueChanges.subscribe((darkMode) => {
-      const darkClassName = 'darkMode';
-      this.className = darkMode ? darkClassName : '';
-    });
+    // const darkClassName = 'darkMode';
+    // this.className = darkClassName;
   }
 
 }

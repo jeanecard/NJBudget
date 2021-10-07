@@ -1,56 +1,90 @@
 <mat-card>
-    <mat-card-title>Qui ?</mat-card-title>
-    <mat-card-subtitle>Répartition des dépenses en septembre</mat-card-subtitle>
+  <mat-card-title>Global</mat-card-title>
+  <mat-card-subtitle>Etat des dépenses en {{month}}</mat-card-subtitle>
+  <div *ngIf="isLoadingGlobal">
+    <mat-spinner diameter="45"></mat-spinner>
+  </div>
+  <div *ngIf="!isLoadingGlobal">
+    <div id="globalChart" class="chart-container">
+      <apx-chart [series]="globalChartOptions?.series" [chart]="globalChartOptions?.chart"
+        [dataLabels]="globalChartOptions?.dataLabels" [plotOptions]="globalChartOptions?.plotOptions"
+        [yaxis]="globalChartOptions?.yaxis" [xaxis]="globalChartOptions?.xaxis" [fill]="globalChartOptions?.fill"
+        [title]="globalChartOptions?.title" [legend]="globalChartOptions?.legend"></apx-chart>
+    </div>
+  </div>
+</mat-card>
+
+<mat-card>
+  <mat-card-title>Qui ?</mat-card-title>
+  <mat-card-subtitle>Répartition des dépenses en {{month}}</mat-card-subtitle>
+  <div *ngIf="isLoadingQui">
+    <mat-spinner diameter="45"></mat-spinner>
+  </div>
+  <div *ngIf="!isLoadingQui">
     <div id="quiChart" class="chart-container">
-        <apx-chart
-        [series]="quiChartOptions.series"
-        [chart]="quiChartOptions.chart"
-        [xaxis]="quiChartOptions.xaxis"
-        [yaxis]="quiChartOptions.yaxis"
-        [stroke]="quiChartOptions.stroke"
-        [markers]="quiChartOptions.markers"
-        [dataLabels]="quiChartOptions.dataLabels"
-        ></apx-chart>
-      </div>
+      <apx-chart [series]="quiChartOptions.series" [chart]="quiChartOptions.chart" [xaxis]="quiChartOptions.xaxis"
+        [yaxis]="quiChartOptions.yaxis" [stroke]="quiChartOptions.stroke" [markers]="quiChartOptions.markers"
+        [dataLabels]="quiChartOptions.dataLabels"></apx-chart>
+    </div>
+  </div>
 </mat-card>
 <mat-card>
-    <mat-card-title>Commun</mat-card-title>
-    <mat-card-subtitle>Répartition des dépenses en septembre</mat-card-subtitle>
+  <mat-card-title>Commun</mat-card-title>
+  <mat-card-subtitle>Répartition des dépenses en {{month}}</mat-card-subtitle>
+  <div *ngIf="isLoadingCommun">
+    <mat-spinner diameter="45"></mat-spinner>
+  </div>
+  <div *ngIf="!isLoadingCommun">
     <div id="communChart" class="chart-container">
-        <apx-chart
-          [series]="communChartOptions?.series"
-          [chart]="communChartOptions?.chart"
-          [xaxis]="communChartOptions?.xaxis"
-          [title]="communChartOptions?.title"
-        ></apx-chart>
-      </div>
-
+      <apx-chart [series]="communChartOptions?.series" [chart]="communChartOptions?.chart"
+        [dataLabels]="communChartOptions?.dataLabels" [plotOptions]="communChartOptions?.plotOptions"
+        [yaxis]="communChartOptions?.yaxis" [xaxis]="communChartOptions?.xaxis" [fill]="communChartOptions?.fill"
+        [title]="communChartOptions?.title" [legend]="communChartOptions?.legend"></apx-chart>
+    </div>
+  </div>
 </mat-card>
 <mat-card>
-    <mat-card-title>Jean</mat-card-title>
-    <mat-card-subtitle>Répartition des dépenses  en septembre</mat-card-subtitle>
+  <mat-card-title>Jean</mat-card-title>
+  <mat-card-subtitle>Répartition des dépenses en {{month}}</mat-card-subtitle>
+  <div *ngIf="isLoadingJean">
+    <mat-spinner diameter="45"></mat-spinner>
+  </div>
+  <div *ngIf="!isLoadingJean">
     <div id="jeanChart" class="chart-container">
-        <apx-chart
-          [series]="jeanChartOptions?.series"
-          [chart]="jeanChartOptions?.chart"
-          [xaxis]="jeanChartOptions?.xaxis"
-          [title]="jeanChartOptions?.title"
-        ></apx-chart>
-      </div>
-
+      <apx-chart [series]="jeanChartOptions?.series" [chart]="jeanChartOptions?.chart"
+        [dataLabels]="jeanChartOptions?.dataLabels" [plotOptions]="jeanChartOptions?.plotOptions"
+        [yaxis]="jeanChartOptions?.yaxis" [xaxis]="jeanChartOptions?.xaxis" [fill]="jeanChartOptions?.fill"
+        [title]="jeanChartOptions?.title" [legend]="jeanChartOptions?.legend"></apx-chart>
+    </div>
+  </div>
 </mat-card>
 <mat-card>
-    <mat-card-title>Nadège</mat-card-title>
-    <mat-card-subtitle>Répartition des dépenses en septembre</mat-card-subtitle>
+  <mat-card-title>Nadège</mat-card-title>
+  <mat-card-subtitle>Répartition des dépenses en {{month}}</mat-card-subtitle>
+  <div *ngIf="isLoadingNadege">
+    <mat-spinner diameter="45"></mat-spinner>
+  </div>
+  <div *ngIf="!isLoadingNadege">
     <div id="nadegeChart" class="chart-container">
-        <apx-chart
-          [series]="nadegeChartOptions?.series"
-          [chart]="nadegeChartOptions?.chart"
-          [xaxis]="nadegeChartOptions?.xaxis"
-          [title]="nadegeChartOptions?.title"
-        ></apx-chart>
-      </div>
-
+      <apx-chart [series]="nadegeChartOptions?.series" [chart]="nadegeChartOptions?.chart"
+        [dataLabels]="nadegeChartOptions?.dataLabels" [plotOptions]="nadegeChartOptions?.plotOptions"
+        [yaxis]="nadegeChartOptions?.yaxis" [xaxis]="nadegeChartOptions?.xaxis" [fill]="nadegeChartOptions?.fill"
+        [title]="nadegeChartOptions?.title" [legend]="nadegeChartOptions?.legend"></apx-chart>
+    </div>
+  </div>
 </mat-card>
- <!-- radar -->
- <!-- polarArea -->
+<mat-card>
+  <mat-card-title>Thomas</mat-card-title>
+  <mat-card-subtitle>Répartition des dépenses en {{month}}</mat-card-subtitle>
+  <div *ngIf="isLoadingThomas">
+    <mat-spinner diameter="45"></mat-spinner>
+  </div>
+  <div *ngIf="!isLoadingThomas">
+    <div id="thomasChart" class="chart-container">
+      <apx-chart [series]="thomasChartOptions?.series" [chart]="thomasChartOptions?.chart"
+        [dataLabels]="thomasChartOptions?.dataLabels" [plotOptions]="thomasChartOptions?.plotOptions"
+        [yaxis]="thomasChartOptions?.yaxis" [xaxis]="thomasChartOptions?.xaxis" [fill]="thomasChartOptions?.fill"
+        [title]="thomasChartOptions?.title" [legend]="thomasChartOptions?.legend"></apx-chart>
+    </div>
+  </div>
+</mat-card>

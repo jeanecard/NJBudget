@@ -21,11 +21,11 @@
         </div>
         <div *ngIf="!isLoading">
           <button autocomplete disabled="{{!isAddOperationAllowed}}" mat-raised-button
-            aria-label="Faites rentrer de l'argent" (click)="addOperation()">
+            aria-label="Faites rentrer de l'argent" (click)="openAddDialog()">
             <mat-icon>add</mat-icon>
           </button>
           <button autocomplete disabled="{{!isRemoveOperationAllowed}}" mat-raised-button
-            aria-label="Dépenser de l'argent" (click)="removeOperation()">
+            aria-label="Dépenser de l'argent" (click)="openRemoveDialog()">
             <mat-icon>remove</mat-icon>
           </button>
         </div>
@@ -64,7 +64,7 @@
             <ng-container matColumnDef="dateOperation">
               <th mat-header-cell *matHeaderCellDef> Date </th>
               <!-- <td mat-cell *matCellDef="let element"> {{element?.dateOperation?.getDate()}}-{{getMonthLocal(element.dateOperation?.getMonth())}} </td> -->
-              <td mat-cell *matCellDef="let element"> {{element?.dateOperation}} </td>
+              <td mat-cell *matCellDef="let element"> {{element?.dateOperation | date:'d MMM'}} </td>
 
             </ng-container>
 
