@@ -58,8 +58,6 @@ export class DepenseComponent implements OnInit, ControlValueAccessor {
   openAddDialog(): void {
     let token = this._initService.getUserToken();
     this.isAuthN = !(token === undefined || token === "" || token === "undefined" || token === null);
-    console.log('token -> ' + JSON.stringify(token));
-    console.log('Auth -> ' + JSON.stringify(this.isAuthN));
 
     if (!this.isAuthN) {
       const dialogRef = this.dialog.open(ConnectDialogComponent, {
@@ -135,8 +133,36 @@ export class DepenseComponent implements OnInit, ControlValueAccessor {
     let token = this._initService.getUserToken();
     this.isAuthN = !(token === undefined || token === "" || token === "undefined");
   }
+  onDeleteRowDialog(input: any): void{
+    let token = this._initService.getUserToken();
+    this.isAuthN = !(token === undefined || token === "" || token === "undefined" || token === null);
+    console.log('token -> ' + JSON.stringify(token));
+    console.log('Auth -> ' + JSON.stringify(this.isAuthN));
+    if (!this.isAuthN) {
+      const dialogRef = this.dialog.open(ConnectDialogComponent, {
+        width: '250px'
+      });
 
+      dialogRef.afterClosed().subscribe(result => {
+        this._initService.setUserToken(result);
+        let token = this._initService.getUserToken();
+        this.isAuthN = !(token === undefined || token === "" || token === "undefined" || token === null);
+
+        if (result && this.isAuthN) {
+
+          this.isAuthN = true;
+          this.onDeleteRow(input);
+        }
+      });
+    }
+    else {
+      this.onDeleteRow(input);
+    }
+
+  }
   onDeleteRow(input: any): void {
+
+ 
     this._compteService.deleteOperation(input.id).subscribe(
       {
         next: (data: CompteModel) => {
