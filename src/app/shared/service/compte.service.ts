@@ -5,14 +5,13 @@ import { CompteModel } from '../model/compte-model';
 import { CompteOperationModel } from '../model/compte-operation-model';
 import { StateCompte } from '../model/state-compte';
 import { InitialisationService } from './initialisation.service';
-import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CompteService {
 
-  constructor(private _userService : UserService, 
+  constructor( 
     private _initService : InitialisationService,
     private _http: HttpClient) { }
 

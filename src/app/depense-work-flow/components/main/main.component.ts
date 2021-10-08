@@ -1,14 +1,14 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { never, Observable } from 'rxjs';
-import { CompteModel } from 'src/app/model/compte-model';
-import { CompteOperationModel } from 'src/app/model/compte-operation-model';
-import { CompteService } from 'src/app/service/compte.service';
-import { DisplayIconService, } from 'src/app/service/display-icon-service.service';
-import { Appartenance, AppartenanceUI } from '../../model/appartenance';
-import { Group, GroupUI } from '../../model/group';
-import { AppartenanceService } from '../../service/appartenance.service';
-import { GroupService } from '../../service/group.service';
+import { CompteModel } from 'src/app/shared/model/compte-model';
+import { CompteOperationModel } from 'src/app/shared/model/compte-operation-model';
+import { CompteService } from 'src/app/shared/service/compte.service';
+import { DisplayIconService, } from 'src/app/shared/service/display-icon-service.service';
+import { Appartenance, AppartenanceUI } from '../../../shared/model/appartenance';
+import { Group, GroupUI } from '../../../shared/model/group';
+import { AppartenanceService } from '../../../shared/service/appartenance.service';
+import { GroupService } from '../../../shared/service/group.service';
 
 @Component({
   selector: 'app-main',

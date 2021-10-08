@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { SyntheseDepenseModel } from '../../model/synthese-depense-model';
-import { DisplayConfigurationService } from '../../service/display-configuration.service';
-import { SyntheseService } from '../../service/synthese.service';
+import { SyntheseDepenseModel } from '../../../shared/model/synthese-depense-model';
+import { DisplayConfigurationService } from '../../../shared/service/display-configuration.service';
+import { SyntheseService } from '../../../shared/service/synthese.service';
 
 import {
   ApexAxisChartSeries,
@@ -13,9 +13,9 @@ import {
   ApexYAxis,
   ApexDataLabels
 } from "ng-apexcharts";
-import { SyntheseDepenseByAppartenanceModel } from 'src/app/model/synthese-depense-by-appartenance-model';
-import { StateCompte } from 'src/app/model/state-compte';
-import { SyntheseDepenseGlobal } from 'src/app/model/synthese-depense-global';
+import { SyntheseDepenseByAppartenanceModel } from 'src/app/shared/model/synthese-depense-by-appartenance-model';
+import { StateCompte } from 'src/app/shared/model/state-compte';
+import { SyntheseDepenseGlobal } from 'src/app/shared/model/synthese-depense-global';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
