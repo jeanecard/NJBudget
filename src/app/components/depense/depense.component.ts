@@ -21,11 +21,11 @@ import { ConnectDialogComponent } from '../connect-dialog/connect-dialog.compone
       useExisting: forwardRef(() => DepenseComponent),
       multi: true
     }
-  ]  
+  ]
 })
-export class DepenseComponent implements OnInit, ControlValueAccessor  {
+export class DepenseComponent implements OnInit, ControlValueAccessor {
 
-  
+
   public displayedColumns: string[] = ['dateOperation', 'caption', 'value', 'action'];
   public dataSource: CompteOperationModel[] = [];
   public compte: CompteModel | null = null;
@@ -34,7 +34,7 @@ export class DepenseComponent implements OnInit, ControlValueAccessor  {
   public descriptionForm: FormControl;
   public isAddOperationAllowed = true;
   public isRemoveOperationAllowed = true;
-  public dateDuJour : String = new Date().toLocaleString();
+  public dateDuJour: String = new Date().toLocaleString();
   public isLoading = false;
   public isAuthN = false;
 
@@ -48,7 +48,7 @@ export class DepenseComponent implements OnInit, ControlValueAccessor  {
     private _compteService: CompteService,
     private notifyService: NotificationService,
     private _displayConfService: DisplayConfigurationService,
-    private _initService :InitialisationService,
+    private _initService: InitialisationService,
     public dialog: MatDialog) {
     this.valeurForm = new FormControl(null, Validators.required);
     this.descriptionForm = new FormControl();
@@ -56,48 +56,56 @@ export class DepenseComponent implements OnInit, ControlValueAccessor  {
   }
 
   openAddDialog(): void {
-    if(!this.isAuthN){
+    let token = this._initService.getUserToken();
+    this.isAuthN = !(token === undefined || token === "" || token === "undefined" || token === null);
+    console.log('token -> ' + JSON.stringify(token));
+    console.log('Auth -> ' + JSON.stringify(this.isAuthN));
+
+    if (!this.isAuthN) {
       const dialogRef = this.dialog.open(ConnectDialogComponent, {
         width: '250px'
       });
-  
+
       dialogRef.afterClosed().subscribe(result => {
-        this._initService.setUserToken(result);        
+        this._initService.setUserToken(result);
         let token = this._initService.getUserToken();
-        this.isAuthN = !(token === undefined || token === "" || token === "undefined");
-        console.log(token);    
-        if(result && this.isAuthN){
+        this.isAuthN = !(token === undefined || token === "" || token === "undefined" || token === null);
+        if (result && this.isAuthN) {
 
           this.isAuthN = true;
           this.addOperation();
         }
       });
     }
-    else{
+    else {
       this.addOperation();
     }
   }
 
   //TODO REFACTO
   openRemoveDialog(): void {
-    if(!this.isAuthN){
+    let token = this._initService.getUserToken();
+    this.isAuthN = !(token === undefined || token === "" || token === "undefined" || token === null);
+    console.log('token -> ' + JSON.stringify(token));
+    console.log('Auth -> ' + JSON.stringify(this.isAuthN));
+    if (!this.isAuthN) {
       const dialogRef = this.dialog.open(ConnectDialogComponent, {
         width: '250px'
       });
-  
+
       dialogRef.afterClosed().subscribe(result => {
-        this._initService.setUserToken(result);        
+        this._initService.setUserToken(result);
         let token = this._initService.getUserToken();
-        console.log(token);    
-        this.isAuthN = !(token === undefined || token === "" || token === "undefined");    
-        if(result && this.isAuthN){
+        this.isAuthN = !(token === undefined || token === "" || token === "undefined" || token === null);
+
+        if (result && this.isAuthN) {
 
           this.isAuthN = true;
           this.removeOperation();
         }
       });
     }
-    else{
+    else {
       this.removeOperation();
     }
   }
@@ -105,12 +113,12 @@ export class DepenseComponent implements OnInit, ControlValueAccessor  {
 
 
   writeValue(obj: any): void {
-    if(obj){
+    if (obj) {
       this.isLoading = true;
       this._groupService.getGroup(obj).subscribe(
         (data: CompteModel) => {
           this.setModelToView(data);
-          this.isLoading = false;          
+          this.isLoading = false;
         });
     }
 
@@ -125,7 +133,7 @@ export class DepenseComponent implements OnInit, ControlValueAccessor  {
 
   ngOnInit(): void {
     let token = this._initService.getUserToken();
-    this.isAuthN = !(token === undefined || token === "" || token === "undefined");    
+    this.isAuthN = !(token === undefined || token === "" || token === "undefined");
   }
 
   onDeleteRow(input: any): void {
@@ -135,15 +143,15 @@ export class DepenseComponent implements OnInit, ControlValueAccessor  {
           this.notifyService.showSuccess("Suppression effectuée", "NJ app");
           this.setModelToView(data);
         },
-        error: (data : any) => {
+        error: (data: any) => {
           this.notifyService.showError("Echec de la suppression :-(", "NJ app");
         },
         complete: () => {
           //Dummy in this version.
         }
       });
-    
-    }
+
+  }
 
   public addOperation(): void {
     if (!this.compte || !this.valeurForm.value) {
@@ -156,7 +164,7 @@ export class DepenseComponent implements OnInit, ControlValueAccessor  {
       this.isLoading = true;
       this._compteService.addOperation(operation).subscribe(
         (data: CompteModel) => {
-          this.isLoading = false;          
+          this.isLoading = false;
           this.notifyService.showSuccess("Opération gain de " + this.valeurForm.value + " euros prise en compte", "NJ app");
           this.setModelToView(data);
           this.descriptionForm.reset();
@@ -166,9 +174,9 @@ export class DepenseComponent implements OnInit, ControlValueAccessor  {
   }
 
   public removeOperation(): void {
-    if (!this.compte  || !this.valeurForm.value) {
-      this.notifyService.showWarning("Veuillez sélectionner un montant", "NJ app");      
-      this.valeurForm.markAsTouched();      
+    if (!this.compte || !this.valeurForm.value) {
+      this.notifyService.showWarning("Veuillez sélectionner un montant", "NJ app");
+      this.valeurForm.markAsTouched();
       return;
     }
     let operation = this.getOperation();
@@ -176,7 +184,7 @@ export class DepenseComponent implements OnInit, ControlValueAccessor  {
       this.isLoading = true;
       this._compteService.removeOperation(operation).subscribe(
         (data: CompteModel) => {
-          this.isLoading = false;          
+          this.isLoading = false;
           this.notifyService.showSuccess("Opération retrait de " + this.valeurForm.value + " euros prise en compte", "NJ app");
           this.setModelToView(data);
           this.descriptionForm.reset();
@@ -189,12 +197,12 @@ export class DepenseComponent implements OnInit, ControlValueAccessor  {
     this.dateDuJour = new Date().toLocaleString();
     this.compte = data;
     let opType = this.compte.operationAllowed;
-    if(!this.compte){
+    if (!this.compte) {
       this.isAddOperationAllowed = false;
       this.isRemoveOperationAllowed = false;
-    } else{
-      this.isAddOperationAllowed =  opType === OperationType.AddAndDelete || opType === OperationType.AddOnly;
-      this.isRemoveOperationAllowed =  opType === OperationType.AddAndDelete || opType === OperationType.DeleteOnly;
+    } else {
+      this.isAddOperationAllowed = opType === OperationType.AddAndDelete || opType === OperationType.AddOnly;
+      this.isRemoveOperationAllowed = opType === OperationType.AddAndDelete || opType === OperationType.DeleteOnly;
     }
     this.dataSource = [];
 
@@ -208,7 +216,7 @@ export class DepenseComponent implements OnInit, ControlValueAccessor  {
     let operation: CompteOperationModel | null = null;
     if (this.compte) {
       operation = {
-        id:null,
+        id: null,
         caption: this.descriptionForm?.value,
         compteId: this.compte.group.id,
         dateOperation: new Date(),
