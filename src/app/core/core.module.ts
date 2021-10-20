@@ -8,16 +8,19 @@ import { DisplayIconService } from './service/display-icon-service.service';
 import { DisplayConfigurationService } from './service/display-configuration.service';
 import { CompteService } from './service/compte.service';
 import { AppartenanceService } from './service/appartenance.service';
+import { HttpClientModule } from '@angular/common/http';
 
 
-NgModule({
+@NgModule({
   declarations: [
-   
+
   ],
   imports: [
     CommonModule,
+    HttpClientModule
   ],
-  providers: [SyntheseService,
+  providers: [
+    SyntheseService,
     NotificationService,
     InitialisationService,
     GroupService,
@@ -26,15 +29,7 @@ NgModule({
     CompteService,
     AppartenanceService],
   exports: [
-    SyntheseService,
-    NotificationService,
-    InitialisationService,
-    GroupService,
-    DisplayIconService,
-    DisplayConfigurationService,
-    CompteService,
-    AppartenanceService,
-    CommonModule,
+    CommonModule
   ]
 })
-export class SharedModule { }
+export class CoreModule { }

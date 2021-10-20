@@ -1,14 +1,14 @@
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { CompteModel } from 'src/app/shared/model/compte-model';
-import { CompteOperationModel } from 'src/app/shared/model/compte-operation-model';
-import { OperationType } from 'src/app/shared/model/operation-type';
-import { CompteService } from 'src/app/shared/service/compte.service';
-import { DisplayConfigurationService } from 'src/app/shared/service/display-configuration.service';
-import { GroupService } from 'src/app/shared/service/group.service';
-import { InitialisationService } from 'src/app/shared/service/initialisation.service';
-import { NotificationService } from 'src/app/shared/service/notification.service';
+import { CompteModel } from '../../../core/model/compte-model';
+import { CompteOperationModel } from '../../../core/model/compte-operation-model';
+import { OperationType } from '../../../core/model/operation-type';
+import { CompteService } from '../../../core/service/compte.service';
+import { DisplayConfigurationService } from '../../../core/service/display-configuration.service';
+import { GroupService } from '../../../core/service/group.service';
+import { InitialisationService } from '../../../core/service/initialisation.service';
+import { NotificationService } from '../../../core/service/notification.service';
 import { ConnectDialogComponent } from '../connect-dialog/connect-dialog.component';
 
 @Component({

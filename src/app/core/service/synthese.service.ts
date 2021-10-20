@@ -24,7 +24,4 @@ export class SyntheseService {
   public getExpenseGlobal() : Observable<SyntheseDepenseGlobal>{
     return this._http.get<SyntheseDepenseGlobal>("https://njbudgetwbackend.azurewebsites.net/api/Synthese/SyntheseMois");
   }
-
-  
-
 }

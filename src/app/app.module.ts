@@ -5,21 +5,26 @@ import { AppComponent } from './app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
 import { ToastrModule } from 'ngx-toastr';
-import { DepenseSyntheseModule } from './depense-synthese/depense-synthese.module';
-import { SyntheseComponent } from './depense-synthese/components/synthese/synthese.component';
-import { DepenseWorkFlowModule } from './depense-work-flow/depense-work-flow.module';
-import { SharedModule } from './shared/shared.module';
 import { RouterModule } from '@angular/router';
+import { HomeComponent } from './landing/home/home.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    HomeComponent,
   ],
   imports: [
+    MatCardModule,
+    MatIconModule,
+    MatButtonModule,
     BrowserModule,
+    MatToolbarModule,
     RouterModule, 
     AppRoutingModule,
     ToastrModule.forRoot({
@@ -33,9 +38,7 @@ import { RouterModule } from '@angular/router';
       registrationStrategy: 'registerWhenStable:30000'
     }),
     BrowserAnimationsModule,
-  // DepenseSyntheseModule,
-    DepenseWorkFlowModule,
-    //SharedModule    
+    //CoreModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,14 +1,12 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { never, Observable } from 'rxjs';
-import { CompteModel } from 'src/app/shared/model/compte-model';
-import { CompteOperationModel } from 'src/app/shared/model/compte-operation-model';
-import { CompteService } from 'src/app/shared/service/compte.service';
-import { DisplayIconService, } from 'src/app/shared/service/display-icon-service.service';
-import { Appartenance, AppartenanceUI } from '../../../shared/model/appartenance';
-import { Group, GroupUI } from '../../../shared/model/group';
-import { AppartenanceService } from '../../../shared/service/appartenance.service';
-import { GroupService } from '../../../shared/service/group.service';
+import { CompteService } from 'src/app/core/service/compte.service';
+import { DisplayIconService, } from 'src/app/core/service/display-icon-service.service';
+import { Appartenance, AppartenanceUI } from '../../../core/model/appartenance';
+import { Group, GroupUI } from '../../../core/model/group';
+import { AppartenanceService } from '../../../core/service/appartenance.service';
+import { GroupService } from '../../../core/service/group.service';
 
 @Component({
   selector: 'app-main',
@@ -34,6 +32,7 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log("Init de Main Component");
     this.isLoading = true;
     this._appartenanceService.getAppartenances().subscribe
       (
