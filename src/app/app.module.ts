@@ -12,6 +12,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { JwtInterceptor } from './core/interceptor/jwtInterceptor';
 
 
 @NgModule({
@@ -20,6 +22,7 @@ import { MatCardModule } from '@angular/material/card';
     HomeComponent,
   ],
   imports: [
+    HttpClientModule,
     MatCardModule,
     MatIconModule,
     MatButtonModule,
@@ -40,7 +43,9 @@ import { MatCardModule } from '@angular/material/card';
     BrowserAnimationsModule,
     //CoreModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

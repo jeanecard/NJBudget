@@ -17,7 +17,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { HttpClientModule } from '@angular/common/http';
 
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { SyntheseRoutingModule } from './synthese-routing.module';
@@ -48,7 +47,6 @@ import { CoreModule } from '../core/core.module';
     MatStepperModule,
     MatAutocompleteModule,
     MatProgressSpinnerModule,    
-    HttpClientModule,   
     CoreModule 
   ],
   exports: [

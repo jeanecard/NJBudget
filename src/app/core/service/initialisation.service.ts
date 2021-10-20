@@ -7,7 +7,7 @@ export class InitialisationService {
   
   
   public getUserToken() : string | null {
-    let retour = localStorage.getItem("Background");
+    let retour = localStorage.getItem("Color");
     if(retour){
       return retour;
     }
@@ -15,7 +15,7 @@ export class InitialisationService {
   }
 
   public setUserToken(data : string) : void {
-    localStorage.setItem("Background", data);
+    localStorage.setItem("Color", data);
   }
 
   public getUserName() : string {

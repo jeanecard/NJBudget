@@ -16,49 +16,23 @@ export class CompteService {
     private _http: HttpClient) { }
 
   addOperation(input : CompteOperationModel) : Observable<CompteModel>{
-    //TODO _userService
-    let token = this._initService.getUserToken();
-    let headers = new HttpHeaders({
-      'Content-Type': 'application/json'});
-      if(token){
-        headers.set('BackgroundId', token);
-      }
-    let options = { headers: headers };    
     return this._http.post<CompteModel>(
       //"https://localhost:44385/api/Operation/add-operation",
       "https://njbudgetwbackend.azurewebsites.net​/api/Operation/add-operation", 
-      input,
-      options);
+      input);
   }
  
   
   removeOperation(input : CompteOperationModel) : Observable<CompteModel>{
-    let token = this._initService.getUserToken();
-        let headers = new HttpHeaders({
-      'Content-Type': 'application/json'});
-      if(token){
-        headers.set('BackgroundId', token);
-      }
-    let options = { headers: headers };    
-
     return this._http.post<CompteModel>(
+      //"https://localhost:44385/api/Operation/remove-operation",
       "https://njbudgetwbackend.azurewebsites.net/api/Operation/remove-operation", 
-      input,
-      options);
+      input);
   }
 
   deleteOperation(idOperation: string) : Observable<CompteModel>{
-    let token = this._initService.getUserToken();
-        let headers = new HttpHeaders({
-      'Content-Type': 'application/json'});
-      if(token){
-        headers.set('BackgroundId', token);
-      }
-    let options = { headers: headers };    
-
     return this._http.delete<CompteModel>(
-      "https://njbudgetwbackend.azurewebsites.net/api/Operation/delete-operation/" +idOperation , 
-      options);
+      "https://njbudgetwbackend.azurewebsites.net/api/Operation/delete-operation/" +idOperation);
  
   }
 }

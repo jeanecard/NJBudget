@@ -210,12 +210,19 @@ export class DepenseComponent implements OnInit, ControlValueAccessor {
       this.isLoading = true;
       this._compteService.removeOperation(operation).subscribe(
         (data: CompteModel) => {
+          // A traiter dans un interceptor          
           this.isLoading = false;
           this.notifyService.showSuccess("Opération retrait de " + this.valeurForm.value + " euros prise en compte", "NJ app");
           this.setModelToView(data);
           this.descriptionForm.reset();
           this.valeurForm.reset();
-        });
+        },
+        (error: any) =>{
+          // A traiter dans un interceptor
+          this.isLoading = false;
+          this.notifyService.showError("Opération retrait de " + this.valeurForm.value + " euros en échec", "NJ app");
+        }
+        );
     }
   }
 

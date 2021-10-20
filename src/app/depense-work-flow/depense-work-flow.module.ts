@@ -19,7 +19,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ConnectDialogComponent } from './components/connect-dialog/connect-dialog.component';
@@ -55,7 +54,6 @@ import { CoreModule } from '../core/core.module';
     MatStepperModule,
     MatAutocompleteModule,
     MatProgressSpinnerModule,    
-    HttpClientModule,    
     RouterModule, 
     MatFormFieldModule,
     CoreModule
