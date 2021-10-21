@@ -1,6 +1,5 @@
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
 import { CompteModel } from '../../../core/model/compte-model';
 import { CompteOperationModel } from '../../../core/model/compte-operation-model';
 import { OperationType } from '../../../core/model/operation-type';
@@ -9,7 +8,6 @@ import { DisplayConfigurationService } from '../../../core/service/display-confi
 import { GroupService } from '../../../core/service/group.service';
 import { InitialisationService } from '../../../core/service/initialisation.service';
 import { NotificationService } from '../../../core/service/notification.service';
-import { ConnectDialogComponent } from '../connect-dialog/connect-dialog.component';
 
 @Component({
   selector: 'app-depense',
@@ -48,67 +46,11 @@ export class DepenseComponent implements OnInit, ControlValueAccessor {
     private _compteService: CompteService,
     private notifyService: NotificationService,
     private _displayConfService: DisplayConfigurationService,
-    private _initService: InitialisationService,
-    public dialog: MatDialog) {
+    private _initService: InitialisationService) {
     this.valeurForm = new FormControl(null, Validators.required);
     this.descriptionForm = new FormControl();
 
   }
-
-  openAddDialog(): void {
-    let token = this._initService.getUserToken();
-    this.isAuthN = !(token === undefined || token === "" || token === "undefined" || token === null);
-
-    if (!this.isAuthN) {
-      const dialogRef = this.dialog.open(ConnectDialogComponent, {
-        width: '250px'
-      });
-
-      dialogRef.afterClosed().subscribe(result => {
-        this._initService.setUserToken(result);
-        let token = this._initService.getUserToken();
-        this.isAuthN = !(token === undefined || token === "" || token === "undefined" || token === null);
-        if (result && this.isAuthN) {
-
-          this.isAuthN = true;
-          this.addOperation();
-        }
-      });
-    }
-    else {
-      this.addOperation();
-    }
-  }
-
-  //TODO REFACTO
-  openRemoveDialog(): void {
-    let token = this._initService.getUserToken();
-    this.isAuthN = !(token === undefined || token === "" || token === "undefined" || token === null);
-    console.log('token -> ' + JSON.stringify(token));
-    console.log('Auth -> ' + JSON.stringify(this.isAuthN));
-    if (!this.isAuthN) {
-      const dialogRef = this.dialog.open(ConnectDialogComponent, {
-        width: '250px'
-      });
-
-      dialogRef.afterClosed().subscribe(result => {
-        this._initService.setUserToken(result);
-        let token = this._initService.getUserToken();
-        this.isAuthN = !(token === undefined || token === "" || token === "undefined" || token === null);
-
-        if (result && this.isAuthN) {
-
-          this.isAuthN = true;
-          this.removeOperation();
-        }
-      });
-    }
-    else {
-      this.removeOperation();
-    }
-  }
-
-
 
   writeValue(obj: any): void {
     if (obj) {
@@ -130,40 +72,12 @@ export class DepenseComponent implements OnInit, ControlValueAccessor {
   }
 
   ngOnInit(): void {
-    let token = this._initService.getUserToken();
-    this.isAuthN = !(token === undefined || token === "" || token === "undefined");
   }
-  onDeleteRowDialog(input: any): void{
-    let token = this._initService.getUserToken();
-    this.isAuthN = !(token === undefined || token === "" || token === "undefined" || token === null);
-    console.log('token -> ' + JSON.stringify(token));
-    console.log('Auth -> ' + JSON.stringify(this.isAuthN));
-    if (!this.isAuthN) {
-      const dialogRef = this.dialog.open(ConnectDialogComponent, {
-        width: '250px'
-      });
 
-      dialogRef.afterClosed().subscribe(result => {
-        this._initService.setUserToken(result);
-        let token = this._initService.getUserToken();
-        this.isAuthN = !(token === undefined || token === "" || token === "undefined" || token === null);
 
-        if (result && this.isAuthN) {
-
-          this.isAuthN = true;
-          this.onDeleteRow(input);
-        }
-      });
-    }
-    else {
-      this.onDeleteRow(input);
-    }
-
-  }
   onDeleteRow(input: any): void {
 
- 
-    this._compteService.deleteOperation(input.id).subscribe(
+     this._compteService.deleteOperation(input.id).subscribe(
       {
         next: (data: CompteModel) => {
           this.notifyService.showSuccess("Suppression effectuée", "NJ app");
@@ -195,6 +109,10 @@ export class DepenseComponent implements OnInit, ControlValueAccessor {
           this.setModelToView(data);
           this.descriptionForm.reset();
           this.valeurForm.reset();
+        },
+        (error : any) => {
+          this.isLoading = false;
+          this.notifyService.showError("Opération gain de " + this.valeurForm.value + " euros en échec", "NJ app");
         });
     }
   }

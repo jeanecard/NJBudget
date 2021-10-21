@@ -21,7 +21,6 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RouterModule } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { ConnectDialogComponent } from './components/connect-dialog/connect-dialog.component';
 import { DepenseWorkFlowRoutingModule } from './depense-work-flow-routing.module';
 import { CoreModule } from '../core/core.module';
 
@@ -31,7 +30,6 @@ import { CoreModule } from '../core/core.module';
   declarations: [
     MainComponent,
     DepenseComponent,
-    ConnectDialogComponent
   ],
   imports: [
     DepenseWorkFlowRoutingModule,
@@ -61,8 +59,6 @@ import { CoreModule } from '../core/core.module';
   exports: [
     MainComponent,
     DepenseComponent,
-    ConnectDialogComponent,
-    ConnectDialogComponent 
   ]  
 })
 export class DepenseWorkFlowModule { }

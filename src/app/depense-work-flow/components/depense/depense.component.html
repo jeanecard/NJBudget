@@ -21,11 +21,11 @@
         </div>
         <div *ngIf="!isLoading">
           <button autocomplete disabled="{{!isAddOperationAllowed}}" mat-raised-button
-            aria-label="Faites rentrer de l'argent" (click)="openAddDialog()">
+            aria-label="Faites rentrer de l'argent" (click)="addOperation()">
             <mat-icon>add</mat-icon>
           </button>
           <button autocomplete disabled="{{!isRemoveOperationAllowed}}" mat-raised-button
-            aria-label="Dépenser de l'argent" (click)="openRemoveDialog()">
+            aria-label="Dépenser de l'argent" (click)="removeOperation()">
             <mat-icon>remove</mat-icon>
           </button>
         </div>
@@ -87,7 +87,6 @@
                 <button mat-button (click)="onDeleteRow(element)">
                   <mat-icon>delete_outline</mat-icon>
                 </button>
-                <a (click)="onDeleteRowDialog(element)">Delete</a>
               </td>
             </ng-container>
 
