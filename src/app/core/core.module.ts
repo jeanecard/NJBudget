@@ -6,7 +6,6 @@ import { InitialisationService } from './service/initialisation.service';
 import { GroupService } from './service/group.service';
 import { DisplayIconService } from './service/display-icon-service.service';
 import { DisplayConfigurationService } from './service/display-configuration.service';
-import { CompteService } from './service/compte.service';
 import { AppartenanceService } from './service/appartenance.service';
 
 
@@ -24,7 +23,6 @@ import { AppartenanceService } from './service/appartenance.service';
     GroupService,
     DisplayIconService,
     DisplayConfigurationService,
-    // CompteService,
     AppartenanceService],
   exports: [
     CommonModule

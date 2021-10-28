@@ -3,25 +3,18 @@ mat-card{
       height:80%;
     }
   
-  
-    // .example-section {
-    //   display: flex;
-    //   align-content: center;
-    //   align-items: center;
-    //   height: 60px;
-    // }
-    
-    // .example-margin {
-    //   margin: 0 10px;
-    // }
-  
     table {
       width: 100%;
     }
-    .example-container {
+
+    .container {
       height: 250px;
       max-width: 100%;
       overflow: auto;
+    }
+
+    .value{
+      width: 50%;
     }
   
     .mat-column-action {
@@ -41,9 +34,6 @@ mat-card{
   
     .caption{
       width: 95%;
-    }
-    .value{
-      width: 50%;
     }
     
     .mat-stepper-horizontal {

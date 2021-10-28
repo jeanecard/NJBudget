@@ -1,7 +1,5 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { never, Observable } from 'rxjs';
-import { CompteService } from 'src/app/core/service/compte.service';
 import { DisplayIconService, } from 'src/app/core/service/display-icon-service.service';
 import { Appartenance, AppartenanceUI } from '../../../core/model/appartenance';
 import { Group, GroupUI } from '../../../core/model/group';
@@ -27,12 +25,10 @@ export class MainComponent implements OnInit {
   constructor(
     private _appartenanceService: AppartenanceService,
     private _groupService: GroupService,
-    private _displayService: DisplayIconService,
-    private _temp: CompteService) {
+    private _displayService: DisplayIconService) {
   }
 
   ngOnInit(): void {
-    console.log("Init de Main Component");
     this.isLoading = true;
     this._appartenanceService.getAppartenances().subscribe
       (

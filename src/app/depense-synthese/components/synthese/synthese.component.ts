@@ -45,12 +45,12 @@ export class SyntheseComponent implements OnInit {
   public globalChartOptions: any;
 
 
-  public isLoadingQui = true;
-  public isLoadingCommun = true;
-  public isLoadingJean = true;
-  public isLoadingThomas = true;
-  public isLoadingNadege = true;
-  public isLoadingGlobal = true;
+  public isLoadingQui = false;
+  public isLoadingCommun = false;
+  public isLoadingJean = false;
+  public isLoadingThomas = false;
+  public isLoadingNadege = false;
+  public isLoadingGlobal = false;
 
   public month = "";
 
@@ -73,74 +73,134 @@ export class SyntheseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.isLoadingQui = true;
-    this.isLoadingCommun = true;
-    this.isLoadingJean = true;
+    // All action are serialized as DB on backend accept only one connection at a time.
+    this.subscribeGlobal();
+  }
+  private subscribeThomas() : void{
+
     this.isLoadingThomas = true;
+
+    this._syntheseService.getExpenseGroupByGroups(this._APPARTENANCE_THOMAS_GUID).subscribe(
+      {
+        next : (data: SyntheseDepenseByAppartenanceModel) => {
+        this.isLoadingThomas = false;
+        this.thomasChartOptions = this.createDataForAppartenanceGraph(data, false);
+      },
+      error : () => {
+        this.isLoadingThomas = false;
+      }, 
+      complete : () => {
+        this.isLoadingThomas = false;
+      }
+    });
+  }
+  
+  
+  private subscribeNadege() : void{
     this.isLoadingNadege = true;
-    this.isLoadingGlobal = true;
+    this._syntheseService.getExpenseGroupByGroups(this._APPARTENANCE_NADEGE_GUID).subscribe(
+     {
+       next : (data: SyntheseDepenseByAppartenanceModel) => {
+        this.isLoadingNadege = false;
+        this.nadegeChartOptions = this.createDataForAppartenanceGraph(data, false);
+      },
+      error : () => {
+        this.isLoadingNadege = false;
+        this.subscribeThomas();        
+      }, 
+      complete : () => {
+        this.isLoadingNadege = false;
+        this.subscribeThomas();        
+      }
+    });
+  }
 
-    this._syntheseService.getExpenseGlobal().subscribe(
-      (data: SyntheseDepenseGlobal) => {
-        this.isLoadingGlobal = false;
-        this.globalChartOptions = this.createDataForGlobalGraph(data);
-      });
+  
 
+  private subscribeJean() : void {
 
-    this._syntheseService.getExpenseGroupByAppartenance().subscribe(
-      (data: SyntheseDepenseModel) => {
-        this.isLoadingQui = false;
-        this.quiChartOptions = this.createDataForPolarReaGraph(data);
-      });
-    this._syntheseService.getExpenseGroupByGroups(this._APPARTENANCE_COMMUN_GUID).subscribe(
-      (data: SyntheseDepenseByAppartenanceModel) => {
-        console.log("Retour du WS commun OK");
-        console.log(data);
-
-        this.isLoadingCommun = false;
-        this.communChartOptions = this.createDataForAppartenanceGraph(data, true);
-      });
-
+    this.isLoadingJean = true;
     this._syntheseService.getExpenseGroupByGroups(this._APPARTENANCE_JEAN_GUID).subscribe(
       ({
         next: (dataJean: SyntheseDepenseByAppartenanceModel) => {
           this.isLoadingJean = false;
-          if(!dataJean){
-            console.log("Retour du WS jean à que dale ???");
-          } else{
-            console.log("Retour du WS jean OK");
-            console.log(dataJean);
-          }
           this.jeanChartOptions = this.createDataForAppartenanceGraph(dataJean, false);
         },
 
         error: (data: any) => {
           this.isLoadingJean = false;
-          // console.log("Erreur dans le getExpenseGroupByGroups de Jean");
-          // console.log('Erreur stringifiee-> ' + JSON.stringify(data));
-          // console.log(data);
+          this.subscribeNadege();          
         },
         complete: () => {
-          console.log("get Appartenance Completed pour Jean");
-          //Dummy in this version.
+          this.isLoadingJean = false;          
+          this.subscribeNadege();          
         }
       }));
 
+  }
+
+  private subscribeCommun() : void {
+    this.isLoadingCommun = true;
+    this._syntheseService.getExpenseGroupByGroups(this._APPARTENANCE_COMMUN_GUID).subscribe(
+      {
+        next : (data: SyntheseDepenseByAppartenanceModel) => {
+        this.isLoadingCommun = false;
+        this.communChartOptions = this.createDataForAppartenanceGraph(data, true);
+      },
+      error : () => {
+        this.isLoadingCommun = false;
+        this.subscribeJean();        
+      },
+      complete : () => {
+        this.isLoadingCommun = false;
+        this.subscribeJean();        
+      }
+    });
+  }
 
 
-    this._syntheseService.getExpenseGroupByGroups(this._APPARTENANCE_NADEGE_GUID).subscribe(
-      (data: SyntheseDepenseByAppartenanceModel) => {
-        this.isLoadingNadege = false;
-        this.nadegeChartOptions = this.createDataForAppartenanceGraph(data, false);
-      });
-    this._syntheseService.getExpenseGroupByGroups(this._APPARTENANCE_THOMAS_GUID).subscribe(
-      (data: SyntheseDepenseByAppartenanceModel) => {
-        this.isLoadingThomas = false;
-        this.thomasChartOptions = this.createDataForAppartenanceGraph(data, false);
-      });
-
+  private subscribeAppartenance() : void {
+    this.isLoadingQui = true;
+    this._syntheseService.getExpenseGroupByAppartenance().subscribe(
+      {
+        next : (data: SyntheseDepenseModel) => {
+        this.isLoadingQui = false;
+        this.quiChartOptions = this.createDataForPolarReaGraph(data);
+      },
+      error : () => {
+        this.isLoadingQui = false;
+        this.subscribeCommun();        
+      },
+      complete: () =>{
+        this.isLoadingQui = false;
+        this.subscribeCommun();        
+      }
+    });
 
   }
+ 
+  private subscribeGlobal() : void{
+    this.isLoadingGlobal = true;
+
+    this._syntheseService.getExpenseGlobal().subscribe(
+      {
+        next:
+          (data: SyntheseDepenseGlobal) => {
+            this.isLoadingGlobal = false;
+            this.globalChartOptions = this.createDataForGlobalGraph(data);
+          },
+        error: () => {
+          this.isLoadingGlobal = false;
+          this.subscribeAppartenance();
+        },
+        complete: () => {
+          this.isLoadingGlobal = false;
+          this.subscribeAppartenance();          
+        }
+      });
+  }
+
+
   createDataForGlobalGraph(input: SyntheseDepenseGlobal): any {
     let retour = null;
     if (input) {
@@ -148,7 +208,7 @@ export class SyntheseComponent implements OnInit {
       let xLabels: string[] = ["Prévu", "Réel"];
       let yPrevus: number[] = [Math.round(input.budgetValuePrevu)];
       let yConsommes: number[] = [Math.round(input.budgetValueDepense)];
-      let prevuColor = this._colorService.getExpectedColor();   
+      let prevuColor = this._colorService.getExpectedColor();
       let consommeColor = this._colorService.getBackgroundColor(input.status);
       retour = {
         series: [
@@ -198,7 +258,7 @@ export class SyntheseComponent implements OnInit {
           offsetX: 0
         }
       };
-    } 
+    }
     return retour;
   }
 
@@ -264,10 +324,10 @@ export class SyntheseComponent implements OnInit {
     return retour;
   }
 
-  createDataForAppartenanceGraph(input: SyntheseDepenseByAppartenanceModel | null, isBar : boolean): any {
+  createDataForAppartenanceGraph(input: SyntheseDepenseByAppartenanceModel | null, isBar: boolean): any {
     let retour = null;
     let typeGraph = "area";
-    if(isBar){
+    if (isBar) {
       typeGraph = "bar";
     }
     if (input) {
@@ -288,23 +348,23 @@ export class SyntheseComponent implements OnInit {
         yPrevus.push(Math.round(iter.budgetValuePrevu));
         yConsommes.push(Math.round(iter.budgetValueDepense));
 
-        
+
         prevuColor.push(this._colorService.getExpectedColor());
         consommeColor.push(this._colorService.getBackgroundColor(iter?.status));
-        
+
       });
       retour = {
         series: [
           {
             name: "Prévu",
             data: yPrevus,
-            color: "rgba(60,179,113,0.4)" 
+            color: "rgba(60,179,113,0.4)"
             //color: prevuColor
           },
           {
             name: "Consommé",
             data: yConsommes,
-            color: "rgba(120,10,13,0.4)" 
+            color: "rgba(120,10,13,0.4)"
 
           }
         ],
@@ -343,7 +403,6 @@ export class SyntheseComponent implements OnInit {
         }
       };
     } else {
-      console.log("Que dale ???");
     }
 
 
@@ -352,7 +411,7 @@ export class SyntheseComponent implements OnInit {
 
   }
 
- 
+
 
 }
 

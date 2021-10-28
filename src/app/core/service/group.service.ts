@@ -13,6 +13,7 @@ export class GroupService {
   constructor( private _http: HttpClient) { }
 // passer par interceptor pour ajouter le token dans le header de la requêtehttp;-)
   public getGroups(idAppartenance: string): Observable<Group[]> {
+
     return this._http.get<Group[]>("https://njbudgetwbackend.azurewebsites.net/api/Group/ByIdAppartenance/" + idAppartenance);
     //return this._http.get<Group[]>("https://localhost:44385/api/Group/ByIdAppartenance/" + idAppartenance);
   }

@@ -17,14 +17,77 @@
     },
     {
       "name": "assets",
-      "installMode": "lazy",
+      "installMode": "prefetch",
       "updateMode": "prefetch",
       "resources": {
         "files": [
           "/assets/**",
+          "/assets/icons/**",
           "/*.(eot|svg|cur|jpg|png|webp|gif|otf|ttf|woff|woff2|ani)"
         ]
       }
     }
+  ],
+  "dataGroups": [
+    {
+      "name": "api-performance-start",
+      "urls": [
+        "api/Appartenance"
+      ],
+      "cacheConfig": {
+        "strategy": "performance",
+        "maxSize": 1,
+        "maxAge": "1d"
+      }
+    },
+    {
+      "name": "api-performance-group-commun",
+      "urls": [
+        "api/Group/ByIdAppartenance/3841747d-8e40-4de8-acd4-4d2b49475cc6"
+      ],
+      "cacheConfig": {
+        "strategy": "freshness",
+        "maxSize": 1,
+        "maxAge": "1d",
+        "timeout": "0u"
+      }
+    },
+    {
+      "name": "api-performance-group-jean",
+      "urls": [
+        "api/Group/ByIdAppartenance/3841747d-8e40-4de8-acd4-4d2b49475cc5"
+      ],
+      "cacheConfig": {
+        "strategy": "freshness",
+        "maxSize": 1,
+        "maxAge": "1d",
+        "timeout": "0u"
+      }
+    },
+    {
+      "name": "api-performance-group-nad",
+      "urls": [
+        "api/Group/ByIdAppartenance/3841747d-8e40-4de8-acd4-4d2b49475cc4"
+      ],
+      "cacheConfig": {
+        "strategy": "freshness",
+        "maxSize": 1,
+        "maxAge": "1d",
+        "timeout": "0u"
+      }
+    },
+    {
+      "name": "api-performance-group-tot",
+      "urls": [
+        "api/Group/ByIdAppartenance/3841747d-8e40-4de8-acd4-4d2b49475cc3"
+      ],
+      "cacheConfig": {
+        "strategy": "freshness",
+        "maxSize": 1,
+        "maxAge": "1d",
+        "timeout": "0u"
+      }
+    }
+
   ]
 }

@@ -59,34 +59,38 @@
       <mat-card-title>Historique</mat-card-title>
       <mat-card-subtitle>Au {{dateDuJour}}</mat-card-subtitle>
       <mat-card-content>
-        <div class="example-container mat-elevation-z8">
+        <div class="container mat-elevation-z8">
           <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
             <ng-container matColumnDef="dateOperation">
               <th mat-header-cell *matHeaderCellDef> Date </th>
-              <!-- <td mat-cell *matCellDef="let element"> {{element?.dateOperation?.getDate()}}-{{getMonthLocal(element.dateOperation?.getMonth())}} </td> -->
               <td mat-cell *matCellDef="let element"> {{element?.dateOperation | date:'d MMM'}} </td>
 
             </ng-container>
 
-            <!-- Name Column -->
+            <!-- Valeur Column -->
             <ng-container matColumnDef="value">
               <th mat-header-cell *matHeaderCellDef> Valeur </th>
               <td mat-cell *matCellDef="let element"> {{element?.value}} </td>
             </ng-container>
 
-            <!-- Weight Column -->
+            <!-- Caption Column -->
             <ng-container matColumnDef="caption">
               <th mat-header-cell *matHeaderCellDef> Description </th>
               <td mat-cell *matCellDef="let element"> {{element?.caption}} </td>
             </ng-container>
 
-            <!-- Action Column -->
+            <!-- Action/Delete Column -->
             <ng-container matColumnDef="action">
               <th mat-header-cell *matHeaderCellDef> Action </th>
-              <td mat-cell *matCellDef="let element" class="action-link">
+              <td mat-cell *matCellDef="let element" >
+                <div *ngIf="!isDeleting">
                 <button mat-button (click)="onDeleteRow(element)">
                   <mat-icon>delete_outline</mat-icon>
                 </button>
+              </div>
+              <div *ngIf="isDeleting">
+                <mat-spinner diameter="15"></mat-spinner>
+              </div>              
               </td>
             </ng-container>
 

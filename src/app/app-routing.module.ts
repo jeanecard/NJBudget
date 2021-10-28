@@ -11,19 +11,18 @@ const routes: Routes = [
   {
     path: 'depense',
     loadChildren: () => import('./depense-work-flow/depense-work-flow.module').then(m => m.DepenseWorkFlowModule)
-  },    
+  },
   {
     path: 'synthese',
     loadChildren: () => import('./depense-synthese/depense-synthese.module').then(m => m.DepenseSyntheseModule)
-  },   
+  },
   {
     path: 'user',
-    loadChildren: () => import('./user/user.module').then(m => m.UserModule)
-  },       
+    loadChildren: () => import('./shared/Component/user/user.module').then(m => m.UserModule)
+  },
   {
-    path: '',
-    redirectTo: 'depense',
-    pathMatch: 'full'
+    path: '**',
+    loadChildren: () => import('./depense-work-flow/depense-work-flow.module').then(m => m.DepenseWorkFlowModule)
   }
 ];
 

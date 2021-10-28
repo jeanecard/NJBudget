@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { InitialisationService } from '../../core/service/initialisation.service';
+import { InitialisationService } from 'src/app/core/service/initialisation.service';
 
 @Component({
   selector: 'app-user',
@@ -17,11 +17,9 @@ export class UserComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.name);
     this.userService.setUserName(this.name.value);
   }
   onCancel() {
     this.name.setValue(this.userService.getUserName());
-    console.log(this.name.value);
   }
 }

@@ -34,9 +34,9 @@ export class DepenseComponent implements OnInit, ControlValueAccessor {
   public isRemoveOperationAllowed = true;
   public dateDuJour: String = new Date().toLocaleString();
   public isLoading = false;
+  public isDeleting = false;
+
   public isAuthN = false;
-
-
 
   propagateChange = (_: any) => { };
   propagateTouch = (_: any) => { };
@@ -56,12 +56,20 @@ export class DepenseComponent implements OnInit, ControlValueAccessor {
     if (obj) {
       this.isLoading = true;
       this._groupService.getGroup(obj).subscribe(
-        (data: CompteModel) => {
-          this.setModelToView(data);
-          this.isLoading = false;
-        });
+        {
+          next: (data: CompteModel) => {
+            this.setModelToView(data);
+            this.isLoading = false;
+          },
+          error : (obj : any) =>{
+            this.isLoading = false;
+          },
+          complete : () =>{
+            this.isLoading = false;
+          }
+        }
+      );
     }
-
   }
   registerOnChange(fn: any): void {
     this.propagateChange = fn;
@@ -76,18 +84,20 @@ export class DepenseComponent implements OnInit, ControlValueAccessor {
 
 
   onDeleteRow(input: any): void {
-
-     this._compteService.deleteOperation(input.id).subscribe(
+    this.isDeleting = true;
+    this._compteService.deleteOperation(input.id).subscribe(
       {
         next: (data: CompteModel) => {
+        this.isDeleting = false;
           this.notifyService.showSuccess("Suppression effectuée", "NJ app");
           this.setModelToView(data);
         },
         error: (data: any) => {
+          this.isDeleting = false;          
           this.notifyService.showError("Echec de la suppression :-(", "NJ app");
         },
         complete: () => {
-          //Dummy in this version.
+          this.isDeleting = false;          
         }
       });
 
@@ -110,7 +120,7 @@ export class DepenseComponent implements OnInit, ControlValueAccessor {
           this.descriptionForm.reset();
           this.valeurForm.reset();
         },
-        (error : any) => {
+        (error: any) => {
           this.isLoading = false;
           this.notifyService.showError("Opération gain de " + this.valeurForm.value + " euros en échec", "NJ app");
         });
@@ -135,12 +145,12 @@ export class DepenseComponent implements OnInit, ControlValueAccessor {
           this.descriptionForm.reset();
           this.valeurForm.reset();
         },
-        (error: any) =>{
+        (error: any) => {
           // A traiter dans un interceptor
           this.isLoading = false;
           this.notifyService.showError("Opération retrait de " + this.valeurForm.value + " euros en échec", "NJ app");
         }
-        );
+      );
     }
   }
 
