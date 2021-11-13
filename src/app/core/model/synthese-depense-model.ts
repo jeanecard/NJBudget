@@ -7,6 +7,10 @@ export interface SyntheseDepenseModelItem {
     budgetValueDepense: number;
     budgetPourcentageDepense: number;
     status: StateCompte;
+    epargne : number;
+    provision: number;
+    depensePure: number;
+    balance: number;
 }
 
 export interface SyntheseDepenseModel {

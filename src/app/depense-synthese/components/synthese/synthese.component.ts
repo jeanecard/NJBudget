@@ -14,8 +14,11 @@ import {
   ApexDataLabels
 } from "ng-apexcharts";
 import { SyntheseDepenseByAppartenanceModel } from 'src/app/core/model/synthese-depense-by-appartenance-model';
-import { StateCompte } from 'src/app/core/model/state-compte';
 import { SyntheseDepenseGlobal } from 'src/app/core/model/synthese-depense-global';
+import { FormControl } from '@angular/forms';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { DateAdapter } from '@angular/material/core';
+import { Moment } from 'moment';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -52,7 +55,9 @@ export class SyntheseComponent implements OnInit {
   public isLoadingNadege = false;
   public isLoadingGlobal = false;
 
-  public month = "";
+  public balanceGlobal = 0;
+
+  public date = new FormControl(new Date());
 
 
   private _APPARTENANCE_COMMUN_GUID = "3841747d-8e40-4de8-acd4-4d2b49475cc6";
@@ -64,11 +69,12 @@ export class SyntheseComponent implements OnInit {
   ];
   public constructor(
     private _syntheseService: SyntheseService,
-    private _colorService: DisplayConfigurationService
+    private _colorService: DisplayConfigurationService,
+    private _adapter: DateAdapter<any>
   ) {
     this.quiChartOptions = this.createDataForPolarReaGraph(null);
     const d = new Date();
-    this.month = this._MONTH_NAMES[d.getMonth()];
+    this._adapter.setLocale('fr');
 
   }
 
@@ -76,51 +82,51 @@ export class SyntheseComponent implements OnInit {
     // All action are serialized as DB on backend accept only one connection at a time.
     this.subscribeGlobal();
   }
-  private subscribeThomas() : void{
+  private subscribeThomas(): void {
 
     this.isLoadingThomas = true;
 
-    this._syntheseService.getExpenseGroupByGroups(this._APPARTENANCE_THOMAS_GUID).subscribe(
+    this._syntheseService.getExpenseGroupByGroups(this._APPARTENANCE_THOMAS_GUID, this.date.value).subscribe(
       {
-        next : (data: SyntheseDepenseByAppartenanceModel) => {
-        this.isLoadingThomas = false;
-        this.thomasChartOptions = this.createDataForAppartenanceGraph(data, false);
-      },
-      error : () => {
-        this.isLoadingThomas = false;
-      }, 
-      complete : () => {
-        this.isLoadingThomas = false;
-      }
-    });
+        next: (data: SyntheseDepenseByAppartenanceModel) => {
+          this.isLoadingThomas = false;
+          this.thomasChartOptions = this.createDataForAppartenanceGraph(data, false);
+        },
+        error: () => {
+          this.isLoadingThomas = false;
+        },
+        complete: () => {
+          this.isLoadingThomas = false;
+        }
+      });
   }
-  
-  
-  private subscribeNadege() : void{
+
+
+  private subscribeNadege(): void {
     this.isLoadingNadege = true;
-    this._syntheseService.getExpenseGroupByGroups(this._APPARTENANCE_NADEGE_GUID).subscribe(
-     {
-       next : (data: SyntheseDepenseByAppartenanceModel) => {
-        this.isLoadingNadege = false;
-        this.nadegeChartOptions = this.createDataForAppartenanceGraph(data, false);
-      },
-      error : () => {
-        this.isLoadingNadege = false;
-        this.subscribeThomas();        
-      }, 
-      complete : () => {
-        this.isLoadingNadege = false;
-        this.subscribeThomas();        
-      }
-    });
+    this._syntheseService.getExpenseGroupByGroups(this._APPARTENANCE_NADEGE_GUID, this.date.value).subscribe(
+      {
+        next: (data: SyntheseDepenseByAppartenanceModel) => {
+          this.isLoadingNadege = false;
+          this.nadegeChartOptions = this.createDataForAppartenanceGraph(data, false);
+        },
+        error: () => {
+          this.isLoadingNadege = false;
+          this.subscribeThomas();
+        },
+        complete: () => {
+          this.isLoadingNadege = false;
+          this.subscribeThomas();
+        }
+      });
   }
 
-  
 
-  private subscribeJean() : void {
+
+  private subscribeJean(): void {
 
     this.isLoadingJean = true;
-    this._syntheseService.getExpenseGroupByGroups(this._APPARTENANCE_JEAN_GUID).subscribe(
+    this._syntheseService.getExpenseGroupByGroups(this._APPARTENANCE_JEAN_GUID, this.date.value).subscribe(
       ({
         next: (dataJean: SyntheseDepenseByAppartenanceModel) => {
           this.isLoadingJean = false;
@@ -129,65 +135,65 @@ export class SyntheseComponent implements OnInit {
 
         error: (data: any) => {
           this.isLoadingJean = false;
-          this.subscribeNadege();          
+          this.subscribeNadege();
         },
         complete: () => {
-          this.isLoadingJean = false;          
-          this.subscribeNadege();          
+          this.isLoadingJean = false;
+          this.subscribeNadege();
         }
       }));
 
   }
 
-  private subscribeCommun() : void {
+  private subscribeCommun(): void {
     this.isLoadingCommun = true;
-    this._syntheseService.getExpenseGroupByGroups(this._APPARTENANCE_COMMUN_GUID).subscribe(
+    this._syntheseService.getExpenseGroupByGroups(this._APPARTENANCE_COMMUN_GUID, this.date.value).subscribe(
       {
-        next : (data: SyntheseDepenseByAppartenanceModel) => {
-        this.isLoadingCommun = false;
-        this.communChartOptions = this.createDataForAppartenanceGraph(data, true);
-      },
-      error : () => {
-        this.isLoadingCommun = false;
-        this.subscribeJean();        
-      },
-      complete : () => {
-        this.isLoadingCommun = false;
-        this.subscribeJean();        
-      }
-    });
+        next: (data: SyntheseDepenseByAppartenanceModel) => {
+          this.isLoadingCommun = false;
+          this.communChartOptions = this.createDataForAppartenanceGraph(data, true);
+        },
+        error: () => {
+          this.isLoadingCommun = false;
+          this.subscribeJean();
+        },
+        complete: () => {
+          this.isLoadingCommun = false;
+          this.subscribeJean();
+        }
+      });
   }
 
 
-  private subscribeAppartenance() : void {
+  private subscribeAppartenance(): void {
     this.isLoadingQui = true;
-    this._syntheseService.getExpenseGroupByAppartenance().subscribe(
+    this._syntheseService.getExpenseGroupByAppartenance(this.date.value).subscribe(
       {
-        next : (data: SyntheseDepenseModel) => {
-        this.isLoadingQui = false;
-        this.quiChartOptions = this.createDataForPolarReaGraph(data);
-      },
-      error : () => {
-        this.isLoadingQui = false;
-        this.subscribeCommun();        
-      },
-      complete: () =>{
-        this.isLoadingQui = false;
-        this.subscribeCommun();        
-      }
-    });
+        next: (data: SyntheseDepenseModel) => {
+          this.isLoadingQui = false;
+          this.quiChartOptions = this.createDataForPolarReaGraph(data);
+        },
+        error: () => {
+          this.isLoadingQui = false;
+          this.subscribeCommun();
+        },
+        complete: () => {
+          this.isLoadingQui = false;
+          this.subscribeCommun();
+        }
+      });
 
   }
- 
-  private subscribeGlobal() : void{
-    this.isLoadingGlobal = true;
 
-    this._syntheseService.getExpenseGlobal().subscribe(
+  private subscribeGlobal(): void {
+    this.isLoadingGlobal = true;
+    this._syntheseService.getExpenseGlobal(this.date.value).subscribe(
       {
         next:
           (data: SyntheseDepenseGlobal) => {
             this.isLoadingGlobal = false;
             this.globalChartOptions = this.createDataForGlobalGraph(data);
+            this.balanceGlobal = data.balance;
           },
         error: () => {
           this.isLoadingGlobal = false;
@@ -195,7 +201,7 @@ export class SyntheseComponent implements OnInit {
         },
         complete: () => {
           this.isLoadingGlobal = false;
-          this.subscribeAppartenance();          
+          this.subscribeAppartenance();
         }
       });
   }
@@ -205,61 +211,83 @@ export class SyntheseComponent implements OnInit {
     let retour = null;
     if (input) {
 
-      let xLabels: string[] = ["Prévu", "Réel"];
-      let yPrevus: number[] = [Math.round(input.budgetValuePrevu)];
-      let yConsommes: number[] = [Math.round(input.budgetValueDepense)];
-      let prevuColor = this._colorService.getExpectedColor();
-      let consommeColor = this._colorService.getBackgroundColor(input.status);
       retour = {
         series: [
           {
             name: "Prévu",
-            data: yPrevus,
-            color: prevuColor
+            data: [Math.round(input.budgetValuePrevu), , ,],
+            //color: "#606060",
           },
           {
-            name: "Consommé",
-            data: yConsommes,
-            consommeColor
-
+            name: "Dépense",
+            data: [, Math.round(input.depensePure), ,],
+            //color: "#0066CC",
+          },
+          {
+            name: "Provision",
+            data: [, Math.round(input.provision), ,],
+            //color: "#6600CC",
+          },
+          {
+            name: "Epargne",
+            data: [, , Math.round(input.epargne),],
+            //color: "#336600",
+          },
+          {
+            name: "Epargne réelle",
+            data: [, , , Math.round(input.balance)],
+            //color: "#CC00CC",
           }
         ],
         chart: {
           type: "bar",
-          height: 200
+          height: 350,
+          stacked: true,
+          toolbar: {
+            show: true
+          },
+          zoom: {
+            enabled: true
+          }
         },
-        plotOptions: {
-          bar: {
-            horizontal: true,
-            dataLabels: {
-              position: "top"
+        responsive: [
+          {
+            breakpoint: 480,
+            options: {
+              legend: {
+                position: "bottom",
+                offsetX: -10,
+                offsetY: 0
+              }
             }
           }
-        },
-        dataLabels: {
-          enabled: true,
-          offsetX: 0,
-          style: {
-            fontSize: "12px",
-            colors: ["#000"]
+        ],
+        plotOptions: {
+          bar: {
+            horizontal: true
           }
         },
-        stroke: {
-          show: true,
-          width: 1,
-          colors: ["#fff"]
-        },
         xaxis: {
-          categories: xLabels
+          type: "category",
+          categories: [
+            "Prévu",
+            "Dépensé",
+            "Epargné",
+            "Balance",
+          ]
         },
         legend: {
           position: "bottom",
-          horizontalAlign: "center",
-          offsetX: 0
+          //offsetY: 40
+        },
+        fill: {
+          opacity: 1
         }
       };
     }
     return retour;
+
+
   }
 
   createDataForPolarReaGraph(input: SyntheseDepenseModel | null): any {
@@ -411,7 +439,14 @@ export class SyntheseComponent implements OnInit {
 
   }
 
-
-
+  dateChange(event: MatDatepickerInputEvent<Moment>) {
+    let m: Moment | null = event.value;
+    let inputDate = new Date();
+    if (m != null) {
+      inputDate = m.toDate();
+    }
+    this.date.setValue(inputDate);
+    this.subscribeGlobal();
+  }
 }
 

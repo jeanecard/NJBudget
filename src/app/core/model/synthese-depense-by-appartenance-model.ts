@@ -13,4 +13,8 @@ export interface SyntheseDepenseByAppartenanceModelItem {
     budgetValueDepense: number;
     budgetPourcentageDepense: number;
     status: StateCompte;
+    epargne : number;
+    provision: number;
+    depensePure: number;
+    balance: number;
 }

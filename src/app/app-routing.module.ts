@@ -21,6 +21,10 @@ const routes: Routes = [
     loadChildren: () => import('./shared/Component/user/user.module').then(m => m.UserModule)
   },
   {
+    path: 'param',
+    loadChildren: () => import('./params/params.module').then(m => m.ParamsModule)
+  },
+  {
     path: '**',
     loadChildren: () => import('./depense-work-flow/depense-work-flow.module').then(m => m.DepenseWorkFlowModule)
   }

@@ -1,6 +1,15 @@
 <mat-card>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Date de synthèse</mat-label>
+    <input  matInput [matDatepicker]="dp" [formControl]="date" (dateChange)="dateChange($event)">
+    <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+    <mat-datepicker touchUi #dp ></mat-datepicker>
+  </mat-form-field>
+
+
   <mat-card-title>Global</mat-card-title>
-  <mat-card-subtitle>Etat des dépenses en {{month}}</mat-card-subtitle>
+  <mat-card-subtitle>Balance : {{balanceGlobal}}</mat-card-subtitle>
   <div *ngIf="isLoadingGlobal">
     <mat-spinner diameter="45"></mat-spinner>
   </div>
@@ -16,7 +25,7 @@
 
 <mat-card>
   <mat-card-title>Qui ?</mat-card-title>
-  <mat-card-subtitle>Répartition des dépenses en {{month}}</mat-card-subtitle>
+  <mat-card-subtitle>Répartition des dépenses</mat-card-subtitle>
   <div *ngIf="isLoadingQui">
     <mat-spinner diameter="45"></mat-spinner>
   </div>
@@ -30,7 +39,7 @@
 </mat-card>
 <mat-card>
   <mat-card-title>Commun</mat-card-title>
-  <mat-card-subtitle>Répartition des dépenses en {{month}}</mat-card-subtitle>
+  <mat-card-subtitle>Répartition des dépenses</mat-card-subtitle>
   <div *ngIf="isLoadingCommun">
     <mat-spinner diameter="45"></mat-spinner>
   </div>
@@ -45,7 +54,7 @@
 </mat-card>
 <mat-card>
   <mat-card-title>Jean</mat-card-title>
-  <mat-card-subtitle>Répartition des dépenses en {{month}}</mat-card-subtitle>
+  <mat-card-subtitle>Répartition des dépenses</mat-card-subtitle>
   <div *ngIf="isLoadingJean">
     <mat-spinner diameter="45"></mat-spinner>
   </div>
@@ -60,7 +69,7 @@
 </mat-card>
 <mat-card>
   <mat-card-title>Nadège</mat-card-title>
-  <mat-card-subtitle>Répartition des dépenses en {{month}}</mat-card-subtitle>
+  <mat-card-subtitle>Répartition des dépenses</mat-card-subtitle>
   <div *ngIf="isLoadingNadege">
     <mat-spinner diameter="45"></mat-spinner>
   </div>
@@ -75,7 +84,7 @@
 </mat-card>
 <mat-card>
   <mat-card-title>Thomas</mat-card-title>
-  <mat-card-subtitle>Répartition des dépenses en {{month}}</mat-card-subtitle>
+  <mat-card-subtitle>Répartition des dépenses</mat-card-subtitle>
   <div *ngIf="isLoadingThomas">
     <mat-spinner diameter="45"></mat-spinner>
   </div>

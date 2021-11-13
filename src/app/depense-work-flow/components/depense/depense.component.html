@@ -34,12 +34,13 @@
   </mat-grid-tile>
 </mat-grid-list>
 <div *ngIf="compteChartOptions">
-  <mat-grid-list cols="1" rowHeight="285px">
+  <mat-grid-list cols="1" rowHeight="325px">
     <mat-grid-tile [colspan]="1">
       <mat-card>
         <mat-card-title-group>
           <mat-card-title>Reste {{compte?.budgetLeft}} euros</mat-card-title>
-          <mat-card-subtitle>Consommé {{compte?.budgetConsummed}} sur {{compte?.budgetExpected}} euros
+          <mat-card-subtitle>Consommé {{compte?.budgetConsummed}} sur {{compte?.budgetExpected}} euros <br>
+            Balance sur les 12 derniers mois {{compte?.balance}} euros
           </mat-card-subtitle>
         </mat-card-title-group>
         <mat-card-content>
@@ -48,12 +49,14 @@
               [xaxis]="compteChartOptions.xaxis" [plotOptions]="compteChartOptions.plotOptions"></apx-chart>
           </div>
         </mat-card-content>
+        <mat-card-subtitle>
+        </mat-card-subtitle>
       </mat-card>
     </mat-grid-tile>
 
   </mat-grid-list>
 </div>
-<mat-grid-list cols="1" rowHeight="400px">
+<mat-grid-list cols="1" rowHeight="450px">
   <mat-grid-tile [colspan]="1">
     <mat-card>
       <mat-card-title>Historique</mat-card-title>

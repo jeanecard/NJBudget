@@ -226,7 +226,7 @@ export class DepenseComponent implements OnInit, ControlValueAccessor {
           opacity: 0.4
         },
         xaxis: {
-          categories: ["Sept."],
+          categories: [this.getMonthLocal(new Date().getMonth())],
           labels: {
             show: false,
           }

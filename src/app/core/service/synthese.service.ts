@@ -12,16 +12,33 @@ export class SyntheseService {
 
   constructor(private _http: HttpClient) { }
 
-  public getExpenseGroupByAppartenance() : Observable<SyntheseDepenseModel>{
+  public getExpenseGroupByAppartenance(date: Date): Observable<SyntheseDepenseModel> {
     //TODO _userService
-    return this._http.get<SyntheseDepenseModel>("https://njbudgetwbackend.azurewebsites.net/api/Synthese/ByAppartenance/");
+    return this._http.get<SyntheseDepenseModel>("https://njbudgetwbackend.azurewebsites.net/api/Synthese/ByAppartenance/"
+      + this.getDateUrlPart(date)
+    );
   }
 
-  public getExpenseGroupByGroups(appartenanceId : string) : Observable<SyntheseDepenseByAppartenanceModel>{
-    return this._http.get<SyntheseDepenseByAppartenanceModel>("https://njbudgetwbackend.azurewebsites.net/api/Synthese/ForAppartenance/" + appartenanceId);
+  public getExpenseGroupByGroups(appartenanceId: string, date: Date): Observable<SyntheseDepenseByAppartenanceModel> {
+    return this._http.get<SyntheseDepenseByAppartenanceModel>(
+      "https://njbudgetwbackend.azurewebsites.net/api/Synthese/ForAppartenance/"
+      + appartenanceId
+      + "/"
+      + this.getDateUrlPart(date)
+    );
+
   }
 
-  public getExpenseGlobal() : Observable<SyntheseDepenseGlobal>{
-    return this._http.get<SyntheseDepenseGlobal>("https://njbudgetwbackend.azurewebsites.net/api/Synthese/SyntheseMois");
+  public getExpenseGlobal(date: Date): Observable<SyntheseDepenseGlobal> {
+    return this._http.get<SyntheseDepenseGlobal>("https://njbudgetwbackend.azurewebsites.net/api/Synthese/SyntheseMois/"
+      +
+      this.getDateUrlPart(date));
+  }
+
+  private getDateUrlPart(date: Date): string {
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+    return year + "/" + month + "/" + day;
   }
 }

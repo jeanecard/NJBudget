@@ -11,7 +11,6 @@ import { AppartenanceService } from './service/appartenance.service';
 
 @NgModule({
   declarations: [
-
   ],
   imports: [
     CommonModule,

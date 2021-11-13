@@ -39,7 +39,7 @@ function wakeupBackendInitializeAppFactory(httpClient: HttpClient, service : Bac
     MatIconModule,
     MatButtonModule,
     BrowserModule,
-    MatToolbarModule,
+    MatToolbarModule, 
     RouterModule, 
     AppRoutingModule,
     ToastrModule.forRoot({

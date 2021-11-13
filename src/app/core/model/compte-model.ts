@@ -12,4 +12,5 @@ export interface CompteModel {
     operations: CompteOperationModel[];
     state: StateCompte;
     operationAllowed: OperationType;
+    balance: number;
 }
