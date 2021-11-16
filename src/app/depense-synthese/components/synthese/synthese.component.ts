@@ -55,8 +55,6 @@ export class SyntheseComponent implements OnInit {
   public isLoadingNadege = false;
   public isLoadingGlobal = false;
 
-  public balanceGlobal = 0;
-
   public date = new FormControl(new Date());
 
 
@@ -193,7 +191,6 @@ export class SyntheseComponent implements OnInit {
           (data: SyntheseDepenseGlobal) => {
             this.isLoadingGlobal = false;
             this.globalChartOptions = this.createDataForGlobalGraph(data);
-            this.balanceGlobal = data.balance;
           },
         error: () => {
           this.isLoadingGlobal = false;
