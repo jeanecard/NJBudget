@@ -53,4 +53,4 @@ jobs:
         app-name: 'NJBudget'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_4118947969f64006a89908fba2fc2227 }}
-        package: ./dist/njbudget
+        package: ./dist/
