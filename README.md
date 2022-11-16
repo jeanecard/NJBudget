@@ -2,7 +2,7 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.3.
 
-Running version (evolutive) is avaialble at : https://njbudjetfront.azurewebsites.net/
+Running version (evolutive) is avaialble at : https://njbudjetfront.azurewebsites.net/ (read only if your are not identified)
 
 ## Development server
 
